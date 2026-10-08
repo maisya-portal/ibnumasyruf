@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Luxury Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#021f15" />
+      <stop offset="50%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#01140e" />
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <!-- Emerald Glow -->
+    <linearGradient id="emeraldGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base with Rounded Corners -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer Golden Border Ring -->
+  <rect x="18" y="18" width="476" height="476" rx="98" fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-opacity="0.4" />
+
+  <!-- Subtle Islamic Geometric Octagram / Arabesque Star Behind -->
+  <g opacity="0.12" fill="none" stroke="#f59e0b" stroke-width="3">
+    <rect x="146" y="146" width="220" height="220" rx="20" transform="rotate(45 256 256)" />
+    <rect x="146" y="146" width="220" height="220" rx="20" />
+    <circle cx="256" cy="256" r="140" />
+  </g>
+
+  <!-- Center Mosque Silhouette with Golden & Emerald Tones -->
+  <g filter="url(#shadow)" transform="translate(0, 16)">
+    <!-- Mosque Main Dome -->
+    <path d="M 256 128 C 218 128 178 188 178 270 L 334 270 C 334 188 294 128 256 128 Z" fill="url(#emeraldGlow)" />
+    
+    <!-- Dome Spire & Crescent -->
+    <path d="M 256 94 L 256 128" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round" />
+    <circle cx="256" cy="90" r="14" fill="url(#goldGrad)" />
+    <circle cx="261" cy="87" r="11" fill="#042a1f" />
+    <polygon points="256,76 258,82 264,82 259,86 261,92 256,88 251,92 253,86 248,82 254,82" fill="url(#goldGrad)" />
+
+    <!-- Left Minaret -->
+    <path d="M 124 180 L 140 198 L 140 330 L 108 330 L 108 198 Z" fill="#065f46" stroke="url(#goldGrad)" stroke-width="2" />
+    <polygon points="124,152 114,180 134,180" fill="url(#goldGrad)" />
+    <rect x="116" y="210" width="16" height="24" rx="8" fill="url(#goldGrad)" />
+    <rect x="116" y="250" width="16" height="24" rx="8" fill="url(#goldGrad)" />
+
+    <!-- Right Minaret -->
+    <path d="M 388 180 L 404 198 L 404 330 L 372 330 L 372 198 Z" fill="#065f46" stroke="url(#goldGrad)" stroke-width="2" />
+    <polygon points="388,152 378,180 398,180" fill="url(#goldGrad)" />
+    <rect x="380" y="210" width="16" height="24" rx="8" fill="url(#goldGrad)" />
+    <rect x="380" y="250" width="16" height="24" rx="8" fill="url(#goldGrad)" />
+
+    <!-- Mosque Base Wall & Archway Doors -->
+    <path d="M 140 270 L 372 270 L 372 344 L 140 344 Z" fill="#043a2b" />
+    <!-- Center Arch Entrance -->
+    <path d="M 230 344 L 230 296 C 230 282 282 282 282 296 L 282 344 Z" fill="url(#goldGrad)" />
+    <!-- Left Arch -->
+    <path d="M 164 344 L 164 306 C 164 294 196 294 196 306 L 196 344 Z" fill="url(#goldGrad)" opacity="0.8" />
+    <!-- Right Arch -->
+    <path d="M 316 344 L 316 306 C 316 294 348 294 348 306 L 348 344 Z" fill="url(#goldGrad)" opacity="0.8" />
+
+    <!-- Decorative Foundation / Base Plinth -->
+    <rect x="92" y="344" width="328" height="18" rx="6" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Soundwave / Broadcast Radio Rings to symbolize Multimedia & Dakwah Streaming -->
+  <g fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-linecap="round" opacity="0.85" filter="url(#glow)">
+    <path d="M 72 160 A 180 180 0 0 1 120 100" />
+    <path d="M 440 160 A 180 180 0 0 0 392 100" />
+    <path d="M 50 190 A 210 210 0 0 1 100 120" stroke-width="3" opacity="0.6" />
+    <path d="M 462 190 A 210 210 0 0 0 412 120" stroke-width="3" opacity="0.6" />
+  </g>
+
+  <!-- Typography at bottom: IBNU MASYURF -->
+  <text x="256" y="420" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="800" font-size="34" letter-spacing="4" fill="#ffffff" text-anchor="middle">
+    IBNU MASYURF
+  </text>
+  <text x="256" y="450" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="600" font-size="16" letter-spacing="6" fill="#10b981" text-anchor="middle">
+    KAJIAN SUNNAH APP
+  </text>
+</svg>

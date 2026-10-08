@@ -1,0 +1,21 @@
+{
+  "name": "ibnu-masyurf-app",
+  "version": "1.0.0",
+  "description": "Aplikasi Kajian Sunnah Multimedia - Video & Audio Dakwah Ahlus Sunnah Wal Jama'ah",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "start": "npx -y serve . -l 3000"
+  },
+  "keywords": [
+    "kajian-sunnah",
+    "radio-rodja",
+    "tv-sunnah",
+    "kajian-net",
+    "salafy",
+    "audio-dakwah"
+  ],
+  "author": "Ibnu Masyurf App",
+  "license": "MIT"
+}

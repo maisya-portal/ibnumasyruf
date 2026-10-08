@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ibnu Masyurf App - Kajian Sunnah Audio & Video Terpercaya</title>
+  <meta name="description" content="Aplikasi Multimedia Kajian Sunnah, Live Radio Dakwah Sunnah (Radio Rodja, Radio Muslim, Bass FM), 19 Saluran TV Sunnah Populer, dan Ribuan Rekaman MP3 Kajian.net. Riwayat tersimpan di LocalStorage.">
+  <meta name="keywords" content="kajian sunnah, radio rodja, tv sunnah, insan tv, ashiil tv, surau tv, kajian.net, abu ayaz, salaf, radio dakwah">
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#050d0a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ibnu Masyurf">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕌</text></svg>">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="theme-dark">
+
+  <!-- APP WRAPPER -->
+  <div id="app" class="app-container">
+
+    <!-- OFFLINE STATUS NOTIFICATION BANNER -->
+    <div id="offline-banner" class="offline-banner hidden">
+      <span class="offline-icon">📡</span>
+      <span class="offline-text">Mode Offline aktif. Menampilkan data lokal tersimpan.</span>
+    </div>
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="app-header">
+      <div class="header-inner">
+        
+        <!-- Brand Logo & Title -->
+        <div class="brand-group" id="btn-brand-home">
+          <div class="brand-logo-icon">
+            <span class="icon-mosque">🕌</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Ibnu Masyurf App</span>
+            <span class="brand-tagline">Kajian Sunnah & Multimedia Salafiyyah</span>
+          </div>
+        </div>
+
+        <!-- Global Search Bar -->
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="global-search-input" placeholder="Cari kajian, asatidzah, radio, TV, atau topik..." autocomplete="off">
+          <button id="btn-clear-search" class="btn-clear-search hidden" title="Hapus pencarian">✕</button>
+        </div>
+
+        <!-- Header Actions: Install PWA, Quick Resume, Favorite, History, Theme -->
+        <div class="header-actions">
+          <button id="btn-install-pwa" class="btn-action-badge btn-install-app hidden" title="Install Ibnu Masyurf App ke perangkat">
+            <span class="action-icon">📲</span>
+            <span class="action-text">Install App</span>
+          </button>
+
+          <button id="btn-quick-resume" class="btn-action-badge hidden" title="Lanjutkan memutar yang terakhir">
+            <span class="pulse-dot"></span>
+            <span class="action-text">Lanjutkan</span>
+          </button>
+          
+          <button id="btn-header-history" class="header-icon-btn" title="Riwayat Pemutaran">
+            <span>⏱️</span>
+            <span id="history-badge-count" class="badge-count hidden">0</span>
+          </button>
+
+          <button id="btn-header-favorites" class="header-icon-btn" title="Koleksi Favorit">
+            <span>⭐</span>
+            <span id="favorites-badge-count" class="badge-count hidden">0</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MAIN NAVIGATION TABS -->
+      <nav class="nav-tabs-bar" aria-label="Navigasi Utama">
+        <div class="nav-tabs-scroll">
+          <button class="nav-tab-btn active" data-tab="tab-beranda">
+            <span class="tab-icon">🏠</span>
+            <span class="tab-label">Beranda</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-tv">
+            <span class="tab-icon">📺</span>
+            <span class="tab-label">TV Sunnah (19 Saluran)</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-radio">
+            <span class="tab-icon">📻</span>
+            <span class="tab-label">Radio Dakwah</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-kajian-audio">
+            <span class="tab-icon">🎙️</span>
+            <span class="tab-label">Kajian Audio (Kajian.net)</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-kajian-video">
+            <span class="tab-icon">📹</span>
+            <span class="tab-label">Video & Dei Kids</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-riwayat">
+            <span class="tab-icon">💾</span>
+            <span class="tab-label">Riwayat & Favorit</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-dzikir">
+            <span class="tab-icon">📿</span>
+            <span class="tab-label">Dzikir & Mutiara</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN APP CONTENT AREA -->
+    <main class="main-content">
+
+      <!-- ========================================================
+           TAB 1: BERANDA
+      ======================================================== -->
+      <section id="tab-beranda" class="tab-section active">
+        
+        <!-- Hero Banner with Islamic Aesthetic -->
+        <div class="hero-banner">
+          <div class="hero-ornament-bg"></div>
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="live-dot"></span> Al-Qur'an & As-Sunnah Sesuai Pemahaman Salafush Shalih
+            </div>
+            <h1 class="hero-title">Pusat Kajian Sunnah, Radio Dakwah & Saluran TV Islam Terpercaya</h1>
+            <p class="hero-subtitle">
+              Nikmati siaran langsung 19 Saluran TV Sunnah, streaming puluhan Radio Dakwah Nusantara (Radio Rodja, Radio Muslim, Bass FM), dan ribuan arsip MP3 kajian ilmiah bersumber dari <strong>kajian.net</strong> & <strong>abuayaz.blogspot.com</strong>.
+            </p>
+            
+            <div class="hero-cta-group">
+              <button class="btn-primary" id="btn-hero-play-radio">
+                <span>📻</span> Putar Radio Rodja Sekarang
+              </button>
+              <button class="btn-secondary" id="btn-hero-watch-tv">
+                <span>📺</span> Tonton Rodja TV
+              </button>
+              <button class="btn-secondary" id="btn-hero-browse-audio">
+                <span>🎙️</span> Jelajahi Kajian.net
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Recent Box (Synced with LocalStorage) -->
+          <div id="hero-last-played-box" class="hero-last-played card-glass hidden">
+            <div class="last-played-header">
+              <span class="last-played-tag">TERAKHIR DIPUTAR</span>
+              <span id="hero-last-played-time" class="last-played-date">Baru saja</span>
+            </div>
+            <div class="last-played-body">
+              <div class="last-played-thumb">
+                <span id="hero-last-played-icon">🎧</span>
+              </div>
+              <div class="last-played-meta">
+                <h4 id="hero-last-played-title">Memuat...</h4>
+                <p id="hero-last-played-subtitle">Memuat data riwayat...</p>
+              </div>
+              <button id="hero-btn-resume" class="btn-play-mini" title="Lanjutkan pemutaran">▶</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mutiara Salaf Hari Ini (Quote Box) -->
+        <div class="quote-card card-glass">
+          <div class="quote-icon-arabic">❝</div>
+          <div class="quote-text-container">
+            <p id="quote-text" class="quote-text">
+              "Hendaklah kamu berpegang kepada atsar Salafush Shalih meskipun orang-orang menolaknya, dan jauhkanlah dirimu dari pendapat orang meskipun ia menghiasinya dengan perkataannya yang indah."
+            </p>
+            <div class="quote-meta">
+              <span id="quote-scholar" class="scholar-name">Imam Al-Auza'i rahimahullah (Wafat 157 H)</span>
+              <span id="quote-source" class="source-ref">Asy-Syari'ah Al-Ajurri I/445</span>
+            </div>
+          </div>
+          <button id="btn-next-quote" class="btn-icon-subtle" title="Ganti mutiara hikmah">🔄</button>
+        </div>
+
+        <!-- Featured Radio Section -->
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title"><span>📻</span> Radio Dakwah Sunnah Pilihan</h2>
+              <p class="section-desc">Siaran langsung kajian aqidah, fiqih, tafsir, dan murottal 24 jam nonstop</p>
+            </div>
+            <button class="btn-link" id="btn-see-all-radios">Lihat Semua Radio (30+) →</button>
+          </div>
+          <div id="home-radios-grid" class="cards-grid cards-grid-compact">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Featured TV Section -->
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title"><span>📺</span> Saluran TV Sunnah Terpopuler</h2>
+              <p class="section-desc">Siaran televisi dakwah Islam terpercaya via satelit & live streaming</p>
+            </div>
+            <button class="btn-link" id="btn-see-all-tv">Lihat 19 Saluran TV →</button>
+          </div>
+          <div id="home-tv-grid" class="cards-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Featured Kajian Audio Section (Kajian.net) -->
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title"><span>🎙️</span> Rekomendasi Kajian Audio (Kajian.net)</h2>
+              <p class="section-desc">Koleksi ceramah ilmiah MP3 dari asatidzah ahlussunnah wal jama'ah</p>
+            </div>
+            <button class="btn-link" id="btn-see-all-audio">Katalog Lengkap Kajian.net →</button>
+          </div>
+          <div id="home-audio-grid" class="cards-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 2: TV SUNNAH POPULER (19 Saluran)
+      ======================================================== -->
+      <section id="tab-tv" class="tab-section">
+        
+        <!-- TV Theater Player Area -->
+        <div class="tv-theater-container">
+          
+          <div class="theater-player-frame">
+            <div id="tv-player-wrapper" class="video-responsive-wrap">
+              <iframe id="tv-iframe-player" 
+                      src="https://www.youtube.com/embed/vFP0_OVlUPU?autoplay=0&enablejsapi=1&rel=0" 
+                      title="Pemutar TV Sunnah" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen></iframe>
+            </div>
+
+            <!-- TV Controls Bar -->
+            <div class="tv-player-bar">
+              <div class="tv-now-playing-info">
+                <span class="live-pill">LIVE ON AIR</span>
+                <h3 id="current-tv-title">Rodja TV</h3>
+                <span id="current-tv-origin" class="text-muted">Cileungsi, Bogor • Satelit Telkom 4</span>
+              </div>
+              <div class="tv-player-actions">
+                <button id="btn-tv-theater-mode" class="btn-icon-labeled" title="Mode Bioskop Lebar">
+                  <span>🎬</span> Mode Lebar
+                </button>
+                <a id="btn-tv-open-official" href="https://rodja.tv" target="_blank" rel="noreferrer" class="btn-icon-labeled" title="Buka website stasiun TV">
+                  <span>🔗</span> Situs Resmi
+                </a>
+                <button id="btn-tv-fav-toggle" class="btn-icon-labeled" title="Simpan ke Favorit">
+                  <span id="tv-fav-icon">☆</span> Favorit
+                </button>
+              </div>
+            </div>
+
+            <!-- TV Channel Details Box -->
+            <div class="tv-details-drawer card-glass">
+              <div class="tv-desc-group">
+                <p id="current-tv-desc">
+                  Saluran televisi dakwah Islam sunnah terpopuler di Indonesia, menyiarkan kajian ilmiah Al-Qur'an dan Sunnah, bimbingan tajwid, tanya jawab interaktif, dan mutiara hikmah dari para asatidzah kibar.
+                </p>
+              </div>
+              <div class="tv-programs-group">
+                <h4>Program & Kajian Unggulan:</h4>
+                <ul id="current-tv-programs" class="program-list">
+                  <!-- Populated via JS -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- TV Channel Filter & Selector -->
+          <div class="tv-catalog-section">
+            <div class="catalog-filters">
+              <h3 class="catalog-title">19 Saluran TV Sunnah Populer</h3>
+              <div class="filter-pills" id="tv-filter-pills">
+                <button class="pill-btn active" data-filter="all">Semua (19)</button>
+                <button class="pill-btn" data-filter="kitab">Kajian Kitab</button>
+                <button class="pill-btn" data-filter="keluarga">Keluarga & Dakwah</button>
+                <button class="pill-btn" data-filter="pesantren">Pesantren Sunnah</button>
+                <button class="pill-btn" data-filter="muamalah">Muamalah & Bisnis</button>
+                <button class="pill-btn" data-filter="kids">Khusus Anak (Dei Kids)</button>
+              </div>
+            </div>
+
+            <div id="tv-channels-grid" class="tv-grid-list">
+              <!-- 19 TV Channels Populated via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 3: RADIO DAKWAH SUNNAH (30+ Saluran)
+      ======================================================== -->
+      <section id="tab-radio" class="tab-section">
+        
+        <div class="section-intro-card card-glass">
+          <div class="intro-icon">📻</div>
+          <div class="intro-body">
+            <h2>Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia</h2>
+            <p>
+              Diadaptasi dan diperbarui dari catatan rujukan <a href="https://abuayaz.blogspot.com/2011/03/daftar-radio-dakwah-islam-ahlus-sunnah.html" target="_blank" rel="noreferrer" class="link-highlight">Abu Ayaz's Blog: Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia</a> serta portal <strong>Radio Islam Indonesia (RII)</strong>. Siaran aktif berfrekuensi AM/FM dan streaming digital di seluruh Nusantara.
+            </p>
+          </div>
+        </div>
+
+        <!-- Radio Filter and Quick Search -->
+        <div class="filter-bar-row">
+          <div class="filter-group">
+            <label for="radio-region-select">Wilayah Nusantara:</label>
+            <select id="radio-region-select" class="custom-select">
+              <option value="all">Semua Wilayah</option>
+              <option value="Jawa">Pulau Jawa</option>
+              <option value="Sumatera">Pulau Sumatera</option>
+              <option value="Sulawesi">Pulau Sulawesi</option>
+              <option value="Indonesia Timur">Maluku & Indonesia Timur</option>
+              <option value="Nasional">Nasional / Streaming</option>
+            </select>
+          </div>
+
+          <div class="filter-group search-input-wrap">
+            <input type="text" id="radio-filter-search" placeholder="Cari nama radio, kota, frekuensi, atau pembina..." class="filter-input">
+          </div>
+          
+          <div class="count-indicator">
+            <span id="radio-count-display">0 Stasiun Ditemukan</span>
+          </div>
+        </div>
+
+        <!-- Radio Cards Grid -->
+        <div id="radios-full-grid" class="cards-grid cards-grid-radio">
+          <!-- Populated via JS -->
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 4: KAJIAN AUDIO MP3 (Kajian.net)
+      ======================================================== -->
+      <section id="tab-kajian-audio" class="tab-section">
+        
+        <div class="section-intro-card card-glass">
+          <div class="intro-icon">🎙️</div>
+          <div class="intro-body">
+            <h2>Arsip Ceramah Islam MP3 Terlengkap (Kajian.net)</h2>
+            <p>
+              Koleksi rekaman audio ceramah agama Islam berbahasa Indonesia dari Asatidzah Ahlussunnah Wal Jama'ah bersumber dari <a href="https://kajian.net/" target="_blank" rel="noreferrer" class="link-highlight">Kajian.net</a>. Dengarkan langsung dengan pemutar audio modern, atur kecepatan playback, pasang timer, dan unduh MP3 secara gratis.
+            </p>
+          </div>
+        </div>
+
+        <!-- Audio Filters & Search -->
+        <div class="audio-filter-panel card-glass">
+          <div class="filter-grid-3">
+            
+            <div class="filter-item">
+              <label for="select-speaker">Pemateri / Asatidzah:</label>
+              <select id="select-speaker" class="custom-select">
+                <option value="all">Semua Asatidzah</option>
+                <!-- Filled via JS -->
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <label for="select-category">Kategori / Topik:</label>
+              <select id="select-category" class="custom-select">
+                <option value="all">Semua Topik</option>
+                <!-- Filled via JS -->
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <label for="input-audio-search">Cari Judul / Kata Kunci:</label>
+              <input type="text" id="input-audio-search" placeholder="Ketik judul kajian atau kitab..." class="filter-input">
+            </div>
+
+          </div>
+
+          <div class="filter-actions-row">
+            <span id="audio-count-display" class="count-tag">Menampilkan 0 Kajian</span>
+            <button id="btn-reset-audio-filter" class="btn-text">Reset Filter</button>
+          </div>
+        </div>
+
+        <!-- Audio Tracks List -->
+        <div id="audio-tracks-container" class="audio-tracks-list">
+          <!-- Populated via JS -->
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 5: KAJIAN VIDEO & DEI KIDS
+      ======================================================== -->
+      <section id="tab-kajian-video" class="tab-section">
+        
+        <div class="section-header">
+          <div>
+            <h2 class="section-title"><span>📹</span> Video Kajian Sunnah & Edukasi Islam Anak</h2>
+            <p class="section-desc">Koleksi video ceramah tematik, serial kitab, dan tayangan edukatif Dei Kids TV</p>
+          </div>
+        </div>
+
+        <!-- Category Pills -->
+        <div class="filter-pills" id="video-filter-pills">
+          <button class="pill-btn active" data-vfilter="all">Semua Video</button>
+          <button class="pill-btn" data-vfilter="Aqidah">Aqidah & Tauhid</button>
+          <button class="pill-btn" data-vfilter="Hadits">Syarah Hadits</button>
+          <button class="pill-btn" data-vfilter="Keluarga">Keluarga</button>
+          <button class="pill-btn" data-vfilter="Muamalah">Muamalah</button>
+          <button class="pill-btn" data-vfilter="Sirah">Sirah Nabawiyah</button>
+          <button class="pill-btn" data-vfilter="kids">🌟 Dei Kids TV (Anak-Anak)</button>
+        </div>
+
+        <!-- Video Cards Grid -->
+        <div id="videos-grid" class="cards-grid cards-grid-video">
+          <!-- Populated via JS -->
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 6: RIWAYAT & FAVORIT (LocalStorage Engine)
+      ======================================================== -->
+      <section id="tab-riwayat" class="tab-section">
+        
+        <div class="section-intro-card card-glass">
+          <div class="intro-icon">💾</div>
+          <div class="intro-body">
+            <h2>Penyimpanan Riwayat & Favorit (LocalStorage)</h2>
+            <p>
+              Seluruh riwayat pemutaran audio, video, TV, dan stasiun radio tersimpan secara otomatis dan aman di <strong>LocalStorage browser Anda</strong>. Riwayat ini akan tetap muncul dan tidak akan hilang selama penyimpanan browser Anda tidak dihapus. Anda dapat melanjutkan pemutaran kapan saja.
+            </p>
+          </div>
+        </div>
+
+        <!-- Storage Sub-tabs: History, Favorites, Notes -->
+        <div class="storage-subtabs">
+          <button class="subtab-btn active" data-subtab="subtab-history">
+            <span>⏱️</span> Riwayat Terakhir (<span id="count-history-badge">0</span>)
+          </button>
+          <button class="subtab-btn" data-subtab="subtab-favorites">
+            <span>⭐</span> Favorit Tersimpan (<span id="count-favorites-badge">0</span>)
+          </button>
+          <button class="subtab-btn" data-subtab="subtab-notes">
+            <span>📝</span> Catatan Faidah Kajian (<span id="count-notes-badge">0</span>)
+          </button>
+        </div>
+
+        <!-- SUBTAB 1: RIWAYAT PEMUTARAN -->
+        <div id="subtab-history" class="subtab-content active">
+          
+          <div class="storage-toolbar">
+            <div class="filter-pills" id="history-filter-pills">
+              <button class="pill-btn active" data-hfilter="all">Semua Tipe</button>
+              <button class="pill-btn" data-hfilter="radio">Radio</button>
+              <button class="pill-btn" data-hfilter="tv">TV Sunnah</button>
+              <button class="pill-btn" data-hfilter="audio">Kajian Audio</button>
+              <button class="pill-btn" data-hfilter="video">Video</button>
+            </div>
+
+            <button id="btn-clear-history" class="btn-danger-outline" title="Hapus seluruh riwayat">
+              <span>🗑️</span> Hapus Semua Riwayat
+            </button>
+          </div>
+
+          <div id="history-items-container" class="history-list">
+            <!-- Populated via JS -->
+          </div>
+
+        </div>
+
+        <!-- SUBTAB 2: FAVORIT / BOOKMARKS -->
+        <div id="subtab-favorites" class="subtab-content">
+          <div class="storage-toolbar">
+            <p class="text-muted">Item yang telah Anda beri tanda bintang / favorit:</p>
+            <button id="btn-clear-favorites" class="btn-danger-outline" title="Hapus semua favorit">
+              <span>🗑️</span> Hapus Semua Favorit
+            </button>
+          </div>
+          <div id="favorites-items-container" class="cards-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- SUBTAB 3: CATATAN FAIDAH KAJIAN -->
+        <div id="subtab-notes" class="subtab-content">
+          <div class="storage-toolbar">
+            <p class="text-muted">Catatan faidah ilmu yang Anda tulis selama mendengarkan kajian:</p>
+            <button id="btn-add-new-note" class="btn-primary">
+              <span>✍️</span> Tulis Catatan Baru
+            </button>
+          </div>
+          <div id="notes-items-container" class="notes-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 7: DZIKIR & MUTIARA SALAF
+      ======================================================== -->
+      <section id="tab-dzikir" class="tab-section">
+        
+        <div class="section-header">
+          <div>
+            <h2 class="section-title"><span>📿</span> Dzikir Pagi & Petang Shahih Sesuai Sunnah</h2>
+            <p class="section-desc">Lafadz dzikir ma'tsurat berdasarkan hadits-hadits shahih, dilengkapi counter tasbih digital</p>
+          </div>
+        </div>
+
+        <!-- Dzikir Time Toggle -->
+        <div class="dzikir-mode-switch">
+          <button id="btn-dzikir-pagi" class="dzikir-mode-btn active">
+            <span>🌅</span> Dzikir Pagi (Subuh - Terbit Fajar)
+          </button>
+          <button id="btn-dzikir-petang" class="dzikir-mode-btn">
+            <span>🌇</span> Dzikir Petang (Ashar - Maghrib)
+          </button>
+        </div>
+
+        <!-- Dzikir Cards List -->
+        <div id="dzikir-cards-container" class="dzikir-cards-list">
+          <!-- Populated via JS -->
+        </div>
+
+        <!-- Mutiara Salaf Section -->
+        <div class="mutiara-salaf-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title"><span>📜</span> Mutiara Atsar Salafush Shalih</h2>
+              <p class="section-desc">Kutipan dan nasehat para imam Ahlussunnah tentang sunnah, atsar, dan aqidah</p>
+            </div>
+          </div>
+          <div id="mutiara-salaf-list" class="mutiara-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ========================================================
+         STICKY FLOATING AUDIO PLAYER (UNIVERSAL)
+    ======================================================== -->
+    <div id="player-bar" class="player-bar">
+      
+      <!-- Progress Bar (Scrubber) -->
+      <div class="player-progress-container" id="player-progress-container">
+        <div class="player-progress-buffered" id="player-buffer-bar"></div>
+        <div class="player-progress-fill" id="player-progress-fill"></div>
+        <div class="player-progress-thumb" id="player-progress-thumb"></div>
+      </div>
+
+      <div class="player-bar-content">
+        
+        <!-- Track Information & Thumb -->
+        <div class="player-track-info">
+          <div class="player-thumb-wrapper" id="btn-expand-player" title="Buka tampilan penuh">
+            <div id="player-thumb-icon" class="player-thumb-icon">📻</div>
+            <div class="player-thumb-overlay">⛶</div>
+          </div>
+          <div class="player-text-wrap" id="btn-expand-player-text">
+            <div class="player-title-row">
+              <span id="player-badge-type" class="badge-mini live">LIVE RADIO</span>
+              <h4 id="player-current-title" class="player-title">Radio Rodja 756 AM</h4>
+            </div>
+            <p id="player-current-speaker" class="player-speaker">Menebar Cahaya Sunnah • Cileungsi, Bogor</p>
+          </div>
+          <button id="player-btn-favorite" class="btn-player-fav" title="Tambahkan ke favorit">☆</button>
+        </div>
+
+        <!-- Player Controls & Audio Visualizer -->
+        <div class="player-center-controls">
+          
+          <div class="player-buttons-row">
+            <button id="player-btn-rewind" class="btn-ctrl-subtle" title="Mundur 10 detik">↺ 10s</button>
+            <button id="player-btn-play" class="btn-ctrl-play" title="Putar / Jeda">▶</button>
+            <button id="player-btn-forward" class="btn-ctrl-subtle" title="Maju 10 detik">10s ↻</button>
+          </div>
+
+          <!-- Time & Visualizer Row -->
+          <div class="player-visual-row">
+            <span id="player-time-current" class="time-label">00:00</span>
+            <div class="canvas-visualizer-wrap">
+              <canvas id="audio-visualizer-canvas" width="160" height="24"></canvas>
+            </div>
+            <span id="player-time-total" class="time-label">LIVE</span>
+          </div>
+
+        </div>
+
+        <!-- Extra Controls: Speed, Sleep Timer, Download, Volume -->
+        <div class="player-extra-controls">
+          
+          <!-- Playback Speed -->
+          <button id="player-btn-speed" class="btn-player-tool" title="Kecepatan putar">1.0x</button>
+
+          <!-- Sleep Timer -->
+          <button id="player-btn-timer" class="btn-player-tool" title="Sleep Timer">
+            <span>⏱️</span> <span id="timer-label" class="timer-tag">Off</span>
+          </button>
+
+          <!-- Download Button (Kajian Audio) -->
+          <a id="player-btn-download" href="#" target="_blank" download class="btn-player-tool hidden" title="Unduh MP3 Resmi Kajian.net">
+            <span>⬇️</span>
+          </a>
+
+          <!-- Volume Controls -->
+          <div class="volume-control-wrap">
+            <button id="player-btn-mute" class="btn-mute" title="Bisu / Nyalakan Suara">🔊</button>
+            <input type="range" id="player-volume-slider" min="0" max="1" step="0.05" value="0.9" class="volume-slider" title="Volume">
+          </div>
+
+          <!-- Fullscreen Expand Button -->
+          <button id="player-btn-maximize" class="btn-player-tool" title="Buka Layar Penuh">⛶</button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hidden Native Audio Element -->
+    <audio id="native-audio" preload="none"></audio>
+
+    <!-- ========================================================
+         MODAL 1: FULLSCREEN EXPANDED PLAYER & FAIDAH NOTES
+    ======================================================== -->
+    <div id="modal-expanded-player" class="modal-backdrop-wrap hidden">
+      <div class="modal-card modal-player-card card-glass">
+        
+        <div class="modal-header">
+          <div class="modal-badge-row">
+            <span id="modal-player-badge" class="badge-mini live">LIVE</span>
+            <span id="modal-player-quality">256 kbps Audio</span>
+          </div>
+          <button id="btn-close-expanded-player" class="btn-close-modal" title="Tutup">✕</button>
+        </div>
+
+        <div class="modal-player-body">
+          <div class="modal-player-left">
+            <div class="modal-cover-art">
+              <span id="modal-cover-icon">📻</span>
+              <canvas id="modal-visualizer-canvas" width="320" height="60"></canvas>
+            </div>
+            <div class="modal-track-meta">
+              <h2 id="modal-track-title">Radio Rodja 756 AM</h2>
+              <h4 id="modal-track-speaker">Menebar Cahaya Sunnah</h4>
+              <p id="modal-track-desc" class="modal-track-desc">Saluran kajian dan murottal Al-Qur'an 24 jam nonstop.</p>
+            </div>
+          </div>
+
+          <!-- Notes Panel inside Player -->
+          <div class="modal-player-right">
+            <div class="notes-panel-header">
+              <h4>📝 Catat Faidah dari Kajian Ini:</h4>
+              <span class="text-muted text-xs">Tersimpan di LocalStorage</span>
+            </div>
+            <textarea id="modal-note-textarea" placeholder="Tuliskan faidah, ayat, hadits, atau poin penting yang Anda dengar..."></textarea>
+            <div class="notes-panel-footer">
+              <span id="note-save-status" class="save-status text-xs text-muted">Belum ada perubahan</span>
+              <button id="btn-save-current-note" class="btn-primary-small">Simpan Catatan</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 2: SLEEP TIMER MODAL
+    ======================================================== -->
+    <div id="modal-sleep-timer" class="modal-backdrop-wrap hidden">
+      <div class="modal-card modal-small-card card-glass">
+        <div class="modal-header">
+          <h3>⏱️ Pengatur Waktu Tidur (Sleep Timer)</h3>
+          <button id="btn-close-timer-modal" class="btn-close-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-hint">Hentikan audio secara otomatis setelah waktu tertentu:</p>
+          <div class="timer-options-grid">
+            <button class="btn-timer-opt" data-minutes="10">10 Menit</button>
+            <button class="btn-timer-opt" data-minutes="15">15 Menit</button>
+            <button class="btn-timer-opt" data-minutes="30">30 Menit</button>
+            <button class="btn-timer-opt" data-minutes="45">45 Menit</button>
+            <button class="btn-timer-opt" data-minutes="60">60 Menit</button>
+            <button class="btn-timer-opt" data-minutes="90">90 Menit</button>
+          </div>
+          <button id="btn-cancel-timer" class="btn-danger-outline w-full mt-3">Matikan Timer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 3: TULIS CATATAN BARU
+    ======================================================== -->
+    <div id="modal-note-editor" class="modal-backdrop-wrap hidden">
+      <div class="modal-card card-glass">
+        <div class="modal-header">
+          <h3 id="note-modal-title">✍️ Tulis Catatan Faidah Baru</h3>
+          <button id="btn-close-note-modal" class="btn-close-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="note-input-title" placeholder="Judul kajian / tema catatan..." class="filter-input mb-3">
+          <input type="text" id="note-input-speaker" placeholder="Nama Asatidzah / Sumber..." class="filter-input mb-3">
+          <textarea id="note-input-body" placeholder="Tulis catatan faidah ilmiah di sini..." rows="8" class="custom-textarea mb-3"></textarea>
+          <div class="flex-end gap-2">
+            <button id="btn-cancel-note" class="btn-secondary">Batal</button>
+            <button id="btn-save-note" class="btn-primary">Simpan ke LocalStorage</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-container" class="toast-container"></div>
+
+  </div>
+
+  <!-- Application Logic Modules -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

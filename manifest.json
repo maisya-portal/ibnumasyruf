@@ -1,0 +1,75 @@
+{
+  "name": "Ibnu Masyurf App - Kajian Sunnah & Live Multimedia",
+  "short_name": "Ibnu Masyurf",
+  "description": "Aplikasi Multimedia Kajian Sunnah, Live Radio Dakwah Ahlus Sunnah, 19 Saluran TV Sunnah, dan Ribuan Rekaman MP3 Kajian.net",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050d0a",
+  "theme_color": "#050d0a",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "lifestyle",
+    "music",
+    "news"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Radio Dakwah",
+      "short_name": "Radio",
+      "description": "Dengarkan Live Radio Rodja dan Radio Sunnah",
+      "url": "./index.html#radio",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "TV Sunnah",
+      "short_name": "TV",
+      "description": "Tonton 19 Saluran TV Dakwah Sunnah",
+      "url": "./index.html#tv",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kajian Audio",
+      "short_name": "Kajian",
+      "description": "Ribuan rekaman MP3 dari Kajian.net",
+      "url": "./index.html#audio",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Dzikir Pagi Petang",
+      "short_name": "Dzikir",
+      "description": "Dzikir pagi dan petang shahih beserta tasbih digital",
+      "url": "./index.html#dzikir",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
