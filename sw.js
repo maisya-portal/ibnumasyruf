@@ -3,7 +3,7 @@
 // Cache Version: v1.0.0
 // ==========================================================================
 
-const CACHE_NAME = 'ibnumasyurf-cache-v1.1.0';
+const CACHE_NAME = 'ibnumasyurf-cache-v1.2.0';
 
 // Core Application Shell Assets
 const STATIC_ASSETS = [

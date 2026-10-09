@@ -249,7 +249,7 @@
                      playsinline
                      style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;">
               </video>
-              <!-- Fallback iframe YouTube (ditampilkan saat HLS tidak tersedia) -->
+              <!-- Direct Web Embed Player (untuk saluran web player mandiri tanpa YouTube) -->
               <iframe id="tv-iframe-player"
                       title="Pemutar TV Sunnah"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -259,6 +259,18 @@
               <!-- Overlay status streaming -->
               <div id="tv-stream-status" class="tv-stream-status hidden">
                 <span id="tv-stream-status-text">Menghubungkan...</span>
+              </div>
+              <!-- Overlay jika siaran offline/sedang rekoneksi -->
+              <div id="tv-offline-overlay" class="tv-offline-overlay hidden">
+                <div class="tv-offline-card card-glass">
+                  <div class="tv-offline-icon">📡</div>
+                  <h4 id="tv-offline-title">Siaran Sedang Menyiapkan Transmisi</h4>
+                  <p id="tv-offline-desc" class="text-xs text-muted">Server sedang menghubungkan sinyal live streaming.</p>
+                  <div class="tv-offline-btns">
+                    <button id="btn-tv-retry-stream" class="btn-primary btn-sm">🔄 Coba Sambungkan Lagi</button>
+                    <a id="btn-tv-visit-site" href="#" target="_blank" rel="noreferrer" class="btn-secondary btn-sm">🌐 Kunjungi Situs Resmi</a>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -304,11 +316,11 @@
               <h3 class="catalog-title">19 Saluran TV Sunnah Populer</h3>
               <div class="filter-pills" id="tv-filter-pills">
                 <button class="pill-btn active" data-filter="all">Semua (19)</button>
+                <button class="pill-btn" data-filter="haramain">Haramain (Makkah & Madinah)</button>
                 <button class="pill-btn" data-filter="kitab">Kajian Kitab</button>
                 <button class="pill-btn" data-filter="keluarga">Keluarga & Dakwah</button>
                 <button class="pill-btn" data-filter="pesantren">Pesantren Sunnah</button>
-                <button class="pill-btn" data-filter="muamalah">Muamalah & Bisnis</button>
-                <button class="pill-btn" data-filter="kids">Khusus Anak (Dei Kids)</button>
+                <button class="pill-btn" data-filter="edukasi">Edukasi & Bahasa Arab</button>
               </div>
             </div>
 
