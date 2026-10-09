@@ -243,11 +243,23 @@
           
           <div class="theater-player-frame">
             <div id="tv-player-wrapper" class="video-responsive-wrap">
-              <iframe id="tv-iframe-player" 
-                      src="https://www.youtube.com/embed/vFP0_OVlUPU?autoplay=0&enablejsapi=1&rel=0" 
-                      title="Pemutar TV Sunnah" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen></iframe>
+              <!-- HLS / HTML5 Video Player -->
+              <video id="tv-video-player"
+                     controls
+                     playsinline
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;background:#000;">
+              </video>
+              <!-- Fallback iframe YouTube (ditampilkan saat HLS tidak tersedia) -->
+              <iframe id="tv-iframe-player"
+                      title="Pemutar TV Sunnah"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:none;">
+              </iframe>
+              <!-- Overlay status streaming -->
+              <div id="tv-stream-status" class="tv-stream-status hidden">
+                <span id="tv-stream-status-text">Menghubungkan...</span>
+              </div>
             </div>
 
             <!-- TV Controls Bar -->
@@ -739,6 +751,8 @@
 
   </div>
 
+  <!-- HLS.js Library untuk Live Streaming M3U8 -->
+  <script src="libs/hls.min.js"></script>
   <!-- Application Logic Modules -->
   <script type="module" src="app.js"></script>
 </body>

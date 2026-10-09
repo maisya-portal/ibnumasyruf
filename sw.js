@@ -3,7 +3,7 @@
 // Cache Version: v1.0.0
 // ==========================================================================
 
-const CACHE_NAME = 'ibnumasyurf-cache-v1.0.0';
+const CACHE_NAME = 'ibnumasyurf-cache-v1.1.0';
 
 // Core Application Shell Assets
 const STATIC_ASSETS = [
@@ -20,7 +20,8 @@ const STATIC_ASSETS = [
   './data/tvChannels.js',
   './data/kajianAudio.js',
   './data/kajianVideo.js',
-  './data/dzikir.js'
+  './data/dzikir.js',
+  './libs/hls.min.js'
 ];
 
 // Install Event: Pre-cache App Shell

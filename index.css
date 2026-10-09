@@ -957,6 +957,63 @@ body {
   height: 100%;
   border: none;
 }
+.video-responsive-wrap video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Live stream status overlay */
+.tv-stream-status {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+  transition: opacity 0.3s;
+}
+.tv-stream-status.live-hls {
+  border: 1px solid rgba(16,185,129,0.5);
+  color: #10b981;
+}
+.tv-stream-status.live-yt {
+  border: 1px solid rgba(239,68,68,0.5);
+  color: #ef4444;
+}
+.tv-stream-status.loading {
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.5);
+}
+.tv-stream-status.error {
+  color: #f87171;
+  border: 1px solid rgba(248,113,113,0.5);
+}
+/* Blinking dot for LIVE */
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+  animation: blink-dot 1.2s ease-in-out infinite;
+}
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
 .tv-player-bar {
   display: flex;
   align-items: center;

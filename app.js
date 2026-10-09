@@ -519,9 +519,95 @@ function clearSleepTimer() {
   document.getElementById('timer-label').textContent = 'Off';
 }
 
-// ==========================================================================
-// TV SUNNAH CONTROLLER (19 Saluran)
-// ==========================================================================
+// HLS.js instance tracker (destroy old before creating new)
+let _hlsInstance = null;
+
+function setTvStreamStatus(type, text) {
+  const el = document.getElementById('tv-stream-status');
+  const textEl = document.getElementById('tv-stream-status-text');
+  if (!el || !textEl) return;
+  el.className = 'tv-stream-status';
+  el.classList.remove('hidden');
+  el.classList.add(type);
+  const dot = type === 'live-hls' || type === 'live-yt'
+    ? '<span class="live-dot"></span>' : '';
+  textEl.innerHTML = dot + ' ' + text;
+}
+
+function loadHlsStream(channel, autoPlay) {
+  const video = document.getElementById('tv-video-player');
+  const iframe = document.getElementById('tv-iframe-player');
+
+  // Destroy previous HLS instance
+  if (_hlsInstance) {
+    _hlsInstance.destroy();
+    _hlsInstance = null;
+  }
+
+  // Show video, hide iframe
+  video.style.display = 'block';
+  iframe.style.display = 'none';
+  iframe.src = '';
+
+  setTvStreamStatus('loading', 'Menghubungkan ke siaran langsung...');
+
+  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+    const hls = new Hls({
+      enableWorker: true,
+      lowLatencyMode: true,
+      backBufferLength: 30,
+    });
+    _hlsInstance = hls;
+
+    hls.loadSource(channel.liveStream);
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      if (autoPlay) {
+        video.muted = true; // Needed for autoplay policy
+        video.play().catch(() => {});
+      }
+      setTvStreamStatus('live-hls', 'LIVE • HLS Stream');
+    });
+
+    hls.on(Hls.Events.ERROR, (event, data) => {
+      if (data.fatal) {
+        console.warn('[HLS] Fatal error, falling back to YouTube embed:', data);
+        hls.destroy();
+        _hlsInstance = null;
+        loadYoutubeEmbed(channel, autoPlay);
+      }
+    });
+
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    // Native HLS (Safari/iOS)
+    video.src = channel.liveStream;
+    video.addEventListener('loadedmetadata', () => {
+      if (autoPlay) video.play().catch(() => {});
+      setTvStreamStatus('live-hls', 'LIVE • HLS Stream');
+    }, { once: true });
+    video.addEventListener('error', () => {
+      loadYoutubeEmbed(channel, autoPlay);
+    }, { once: true });
+
+  } else {
+    // Browser tidak support HLS sama sekali, fallback ke YouTube
+    loadYoutubeEmbed(channel, autoPlay);
+  }
+}
+
+function loadYoutubeEmbed(channel, autoPlay) {
+  const video = document.getElementById('tv-video-player');
+  const iframe = document.getElementById('tv-iframe-player');
+
+  // Hide video, show iframe
+  video.style.display = 'none';
+  video.src = '';
+  iframe.style.display = 'block';
+  iframe.src = channel.embedUrl || `https://www.youtube.com/embed/live_stream?channel=${channel.youtubeChannelId}&autoplay=${autoPlay ? 1 : 0}&rel=0`;
+
+  setTvStreamStatus('live-yt', 'LIVE • YouTube Stream');
+}
 
 function switchTvChannel(channelId, autoPlay = true, notify = true) {
   const channel = tvChannels.find(c => c.id === channelId);
@@ -540,11 +626,25 @@ function switchTvChannel(channelId, autoPlay = true, notify = true) {
     });
   }
 
-  const iframe = document.getElementById('tv-iframe-player');
-  // Update video player embed: hanya autoplay jika user yang sengaja memilih/memutar saluran
-  const targetSrc = `https://www.youtube.com/embed/${channel.backupVideoId}?autoplay=${autoPlay ? 1 : 0}&enablejsapi=1&rel=0`;
-  if (iframe && iframe.src !== targetSrc) {
-    iframe.src = targetSrc;
+  // Pilih metode: HLS langsung atau YouTube embed
+  if (channel.liveStream) {
+    loadHlsStream(channel, autoPlay);
+  } else {
+    const video = document.getElementById('tv-video-player');
+    const iframe = document.getElementById('tv-iframe-player');
+    // Destroy any running HLS
+    if (_hlsInstance) { _hlsInstance.destroy(); _hlsInstance = null; }
+    video.style.display = 'none';
+    video.src = '';
+    if (!autoPlay) {
+      // Saat init, jangan auto-play iframe YouTube
+      iframe.style.display = 'none';
+      iframe.src = '';
+      const statusEl = document.getElementById('tv-stream-status');
+      if (statusEl) statusEl.classList.add('hidden');
+    } else {
+      loadYoutubeEmbed(channel, autoPlay);
+    }
   }
 
   document.getElementById('current-tv-title').textContent = channel.name;
@@ -570,7 +670,7 @@ function switchTvChannel(channelId, autoPlay = true, notify = true) {
   });
 
   if (notify) {
-    showToast(`Saluran dialihkan ke: ${channel.name}`);
+    showToast(`▶ ${channel.name} – Siaran Langsung`);
   }
 }
 
@@ -1224,10 +1324,16 @@ function openNoteModal(title = '', speaker = '', content = '', noteId = '') {
 function switchTab(tabId) {
   state.activeTab = tabId;
 
-  // Jika berpindah dari tab TV ke tab lain, jeda (pause) pemutar video YouTube agar tidak bersuara di latar belakang
+  // Jika berpindah dari tab TV ke tab lain, hentikan/pause pemutar agar tidak bersuara di latar belakang
   if (tabId !== 'tab-tv') {
+    // Pause HTML5 video (HLS)
+    const video = document.getElementById('tv-video-player');
+    if (video && !video.paused) {
+      video.pause();
+    }
+    // Pause YouTube iframe jika sedang aktif
     const iframe = document.getElementById('tv-iframe-player');
-    if (iframe && iframe.contentWindow) {
+    if (iframe && iframe.contentWindow && iframe.style.display !== 'none') {
       try {
         iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
       } catch (err) {
