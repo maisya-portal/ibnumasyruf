@@ -523,23 +523,29 @@ function clearSleepTimer() {
 // TV SUNNAH CONTROLLER (19 Saluran)
 // ==========================================================================
 
-function switchTvChannel(channelId) {
+function switchTvChannel(channelId, autoPlay = true, notify = true) {
   const channel = tvChannels.find(c => c.id === channelId);
   if (!channel) return;
 
   state.activeTvId = channelId;
-  saveToHistory({
-    id: channel.id,
-    title: channel.name,
-    speaker: channel.tagline,
-    type: 'tv',
-    url: channel.embedUrl,
-    logo: channel.logo
-  });
+
+  if (autoPlay) {
+    saveToHistory({
+      id: channel.id,
+      title: channel.name,
+      speaker: channel.tagline,
+      type: 'tv',
+      url: channel.embedUrl,
+      logo: channel.logo
+    });
+  }
 
   const iframe = document.getElementById('tv-iframe-player');
-  // Update video player embed
-  iframe.src = `https://www.youtube.com/embed/${channel.backupVideoId}?autoplay=1&enablejsapi=1&rel=0`;
+  // Update video player embed: hanya autoplay jika user yang sengaja memilih/memutar saluran
+  const targetSrc = `https://www.youtube.com/embed/${channel.backupVideoId}?autoplay=${autoPlay ? 1 : 0}&enablejsapi=1&rel=0`;
+  if (iframe && iframe.src !== targetSrc) {
+    iframe.src = targetSrc;
+  }
 
   document.getElementById('current-tv-title').textContent = channel.name;
   document.getElementById('current-tv-origin').textContent = `${channel.origin} • Satelit: ${channel.satelit}`;
@@ -563,7 +569,9 @@ function switchTvChannel(channelId) {
     }
   });
 
-  showToast(`Saluran dialihkan ke: ${channel.name}`);
+  if (notify) {
+    showToast(`Saluran dialihkan ke: ${channel.name}`);
+  }
 }
 
 // ==========================================================================
@@ -1216,6 +1224,18 @@ function openNoteModal(title = '', speaker = '', content = '', noteId = '') {
 function switchTab(tabId) {
   state.activeTab = tabId;
 
+  // Jika berpindah dari tab TV ke tab lain, jeda (pause) pemutar video YouTube agar tidak bersuara di latar belakang
+  if (tabId !== 'tab-tv') {
+    const iframe = document.getElementById('tv-iframe-player');
+    if (iframe && iframe.contentWindow) {
+      try {
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      } catch (err) {
+        console.warn('Could not postMessage to iframe:', err);
+      }
+    }
+  }
+
   // Update nav buttons
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
     if (btn.dataset.tab === tabId) {
@@ -1276,8 +1296,8 @@ function initApp() {
   updateHistoryBadges();
   updateFavoritesBadges();
 
-  // Initialize TV player default
-  switchTvChannel('rodja-tv');
+  // Initialize TV player default (tanpa autoplay, tanpa simpan riwayat & tanpa toast saat inisialisasi awal)
+  switchTvChannel('rodja-tv', false, false);
 
   // 3. Tab switching listeners
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
