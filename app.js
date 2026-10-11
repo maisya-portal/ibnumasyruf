@@ -1421,7 +1421,13 @@ function updateSplashProgress(percent, statusText) {
   const bar = document.getElementById('splash-progress-bar');
   const text = document.getElementById('splash-status-text');
   if (bar) bar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
-  if (text && statusText) text.textContent = statusText;
+  if (text && statusText) {
+    text.style.opacity = '0';
+    setTimeout(() => {
+      text.textContent = statusText;
+      text.style.opacity = '1';
+    }, 120);
+  }
 }
 
 let _splashDismissed = false;
@@ -1432,14 +1438,36 @@ function dismissSplashScreen() {
   const splash = document.getElementById('app-splash-screen');
   if (!splash) return;
 
-  updateSplashProgress(100, 'Aplikasi Siap Digunakan');
+  updateSplashProgress(100, 'Selamat Datang di Ibnu Masyruf App');
 
+  // Beri jeda 700ms agar status 100% dan animasi icon dinikmati pengguna
   setTimeout(() => {
     splash.classList.add('splash-fading');
     setTimeout(() => {
       splash.style.display = 'none';
-    }, 750);
-  }, 450);
+    }, 850);
+  }, 700);
+}
+
+function startSplashScreenSequence() {
+  // Rangkaian animasi loading bertahap (~2.8 detik total durasi optimal)
+  updateSplashProgress(18, 'Menyiapkan media dakwah & belajar...');
+
+  setTimeout(() => {
+    updateSplashProgress(45, 'Menghubungkan 20 saluran TV & 23 radio sunnah...');
+  }, 750);
+
+  setTimeout(() => {
+    updateSplashProgress(72, 'Menyiapkan arsip ceramah & audio ilmiah...');
+  }, 1500);
+
+  setTimeout(() => {
+    updateSplashProgress(92, 'Menghubungkan pustaka faidah & dzikir...');
+  }, 2250);
+
+  setTimeout(() => {
+    dismissSplashScreen();
+  }, 2900);
 }
 
 // ==========================================================================
@@ -1448,7 +1476,9 @@ function dismissSplashScreen() {
 
 function initApp() {
   console.log('Initializing Ibnu Masyruf App...');
-  updateSplashProgress(25, 'Memuat stasiun radio & TV sunnah...');
+  
+  // Jalankan animasi splash screen berdurasi terencana
+  startSplashScreenSequence();
 
   // 1. Populate Asatidzah & Category options in Audio Filter
   const speakerSelect = document.getElementById('select-speaker');
@@ -1798,10 +1828,10 @@ function initApp() {
   initPWAInstall();
   initNetworkStatusMonitor();
 
-  // Loading screen selesai & transisi mulus
-  updateSplashProgress(100, 'Selamat Datang di Ibnu Masyruf App');
-  dismissSplashScreen();
-  setTimeout(dismissSplashScreen, 2800); // Batas aman maksimal
+  // Safety timeout jika ada keterlambatan di perangkat tertentu
+  setTimeout(() => {
+    dismissSplashScreen();
+  }, 4500);
 
   console.log('Ibnu Masyruf App is ready!');
 }

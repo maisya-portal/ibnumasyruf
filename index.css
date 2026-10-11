@@ -2281,9 +2281,9 @@ body {
   overflow: hidden;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
-              visibility 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -2474,7 +2474,7 @@ body {
   background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #34d399 100%);
   border-radius: 999px;
   box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
-  transition: width 0.35s ease-out;
+  transition: width 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .splash-status-text {
