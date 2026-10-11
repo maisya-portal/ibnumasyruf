@@ -3871,6 +3871,337 @@ body {
   text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
 }
 
+/* ==========================================================================
+   STREAM HEALTH INDICATOR & OFFLINE GROUPING STYLES (TV & RADIO)
+   ========================================================================== */
+
+/* Stream Status Badges */
+.stream-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2.5px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
+}
+
+.stream-status-badge.online {
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+}
+
+.stream-status-badge.offline {
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  color: #f87171;
+}
+
+/* Pulsing Status Dots */
+.status-pulse-dot {
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-pulse-dot.online {
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: statusPulseGreen 1.8s infinite;
+}
+
+.status-pulse-dot.offline {
+  background: #ef4444;
+  box-shadow: 0 0 5px rgba(239, 68, 68, 0.6);
+  animation: statusPulseRed 2.6s infinite;
+}
+
+@keyframes statusPulseGreen {
+  0% { transform: scale(0.92); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.92); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@keyframes statusPulseRed {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  50% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(0.92); opacity: 0.75; }
+}
+
+/* Stream Last Active / Checked Time */
+.stream-last-active {
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stream-last-active.online {
+  color: #34d399;
+  font-weight: 600;
+}
+
+.stream-last-active.offline {
+  color: #94a3b8;
+}
+
+/* TV Catalog Header Bar & Status Controls */
+.catalog-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-summary-wrap {
+  margin-top: 4px;
+}
+
+.status-summary-tag {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Automated Check Button */
+.btn-check-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(212, 175, 55, 0.12));
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #ecfdf5;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+}
+
+.btn-check-status-pill:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(212, 175, 55, 0.25));
+  border-color: var(--emerald-brand);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.btn-check-status-pill.is-checking .check-icon {
+  display: inline-block;
+  animation: spinCheck 0.8s linear infinite;
+}
+
+@keyframes spinCheck {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Status Filter Switchers (Pills) */
+.status-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.radio-status-pills-bar {
+  margin-top: 10px;
+  margin-bottom: 18px;
+}
+
+.pill-status-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill-status-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pill-status-btn.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.pill-status-btn.status-btn-online.active {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: var(--emerald-brand);
+  color: #34d399;
+  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
+}
+
+.pill-status-btn.status-btn-offline.active {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: #ef4444;
+  color: #fca5a5;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Section Group Headers for Grouped Stream Grids */
+.stream-group-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  margin: 12px 0 6px 0;
+  backdrop-filter: blur(10px);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stream-group-header.online {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 26, 18, 0.8) 100%);
+  border-left: 4px solid var(--emerald-brand);
+  border-top: 1px solid rgba(16, 185, 129, 0.25);
+  border-right: 1px solid rgba(16, 185, 129, 0.12);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+.stream-group-header.offline {
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.12) 0%, rgba(26, 10, 10, 0.8) 100%);
+  border-left: 4px solid #ef4444;
+  border-top: 1px solid rgba(239, 68, 68, 0.25);
+  border-right: 1px solid rgba(239, 68, 68, 0.12);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.12);
+  margin-top: 24px;
+}
+
+.stream-group-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.stream-group-sub {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* TV Card Enhancements */
+.tv-chan-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.tv-chan-header-row h4 {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.tv-chan-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+/* Radio Card Enhancements */
+.radio-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.radio-meta-sub {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-last-active-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Offline Card Appearance */
+.tv-channel-card.is-offline {
+  opacity: 0.82;
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(15, 20, 25, 0.85);
+}
+
+.tv-channel-card.is-offline:hover {
+  opacity: 1;
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(25, 28, 35, 0.95);
+}
+
+.item-card.is-offline {
+  opacity: 0.85;
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.item-card.is-offline:hover {
+  opacity: 1;
+  border-color: rgba(239, 68, 68, 0.45);
+}
+
+.radio-avatar-wrap.is-offline {
+  filter: grayscale(0.55);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.btn-play-offline {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+}
+
+.btn-play-offline:hover {
+  background: rgba(239, 68, 68, 0.32) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3) !important;
+}
+
 
 
 

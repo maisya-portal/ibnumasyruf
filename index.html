@@ -402,9 +402,28 @@
           <!-- TV Channel Filter & Selector -->
           <div class="tv-catalog-section">
             <div class="catalog-filters">
-              <h3 class="catalog-title">20 Saluran TV Sunnah Populer</h3>
+              <div class="catalog-header-bar">
+                <div>
+                  <h3 class="catalog-title">20 Saluran TV Sunnah Populer</h3>
+                  <div class="status-summary-wrap">
+                    <span id="tv-status-summary-text" class="status-summary-tag">Memeriksa status siaran...</span>
+                  </div>
+                </div>
+                <button id="btn-check-all-tv" class="btn-check-status-pill" title="Cek otomatis status siaran live semua saluran TV">
+                  <span class="check-icon">🔄</span> <span class="check-btn-text">Cek Status TV</span>
+                </button>
+              </div>
+
+              <!-- Filter Status Siaran (On Air vs Off Air) -->
+              <div class="status-filter-pills" id="tv-status-filter-pills">
+                <button class="pill-status-btn active" data-status="all">Semua Saluran (20)</button>
+                <button class="pill-status-btn status-btn-online" data-status="online">🟢 On Air (<span id="tv-count-online">--</span>)</button>
+                <button class="pill-status-btn status-btn-offline" data-status="offline">🔴 Sedang Off Air (<span id="tv-count-offline">--</span>)</button>
+              </div>
+
+              <!-- Filter Kategori Tema Saluran -->
               <div class="filter-pills" id="tv-filter-pills">
-                <button class="pill-btn active" data-filter="all">Semua (20)</button>
+                <button class="pill-btn active" data-filter="all">Semua Kategori</button>
                 <button class="pill-btn" data-filter="haramain">Haramain (Makkah & Madinah)</button>
                 <button class="pill-btn" data-filter="kitab">Kajian Kitab</button>
                 <button class="pill-btn" data-filter="keluarga">Keluarga & Dakwah</button>
@@ -414,7 +433,7 @@
             </div>
 
             <div id="tv-channels-grid" class="tv-grid-list">
-              <!-- 19 TV Channels Populated via JS -->
+              <!-- 20 TV Channels Populated via JS -->
             </div>
           </div>
 
@@ -432,7 +451,7 @@
           <div class="intro-body">
             <h2>Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia</h2>
             <p>
-              Diadaptasi dan diperbarui dari catatan rujukan <a href="https://abuayaz.blogspot.com/2011/03/daftar-radio-dakwah-islam-ahlus-sunnah.html" target="_blank" rel="noreferrer" class="link-highlight">Abu Ayaz's Blog: Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia</a> serta portal <strong>Radio Islam Indonesia (RII)</strong>. Siaran aktif berfrekuensi AM/FM dan streaming digital di seluruh Nusantara.
+              Diadaptasi dan diperbarui dari catatan rujukan <a href="https://abuayaz.blogspot.com/2011/03/daftar-radio-dakwah-islam-ahlus-sunnah.html" target="_blank" rel="noreferrer" class="link-highlight">Abu Ayaz's Blog: Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia</a> serta portal <strong>Radio Islam Indonesia (RII)</strong>. Dilengkapi deteksi otomatis siaran aktif (On Air / Off Air) dan riwayat live terakhir.
             </p>
           </div>
         </div>
@@ -454,10 +473,21 @@
           <div class="filter-group search-input-wrap">
             <input type="text" id="radio-filter-search" placeholder="Cari nama radio, kota, frekuensi, atau pembina..." class="filter-input">
           </div>
-          
+
           <div class="count-indicator">
             <span id="radio-count-display">0 Stasiun Ditemukan</span>
           </div>
+
+          <button id="btn-check-all-radios" class="btn-check-status-pill" title="Cek otomatis status transmisi streaming semua radio">
+            <span class="check-icon">🔄</span> <span class="check-btn-text">Cek Status Radio</span>
+          </button>
+        </div>
+
+        <!-- Filter Status Siaran Radio (On Air vs Off Air) -->
+        <div class="status-filter-pills radio-status-pills-bar" id="radio-status-filter-pills">
+          <button class="pill-status-btn active" data-status="all">Semua Radio</button>
+          <button class="pill-status-btn status-btn-online" data-status="online">🟢 On Air (<span id="radio-count-online">--</span>)</button>
+          <button class="pill-status-btn status-btn-offline" data-status="offline">🔴 Sedang Off Air (<span id="radio-count-offline">--</span>)</button>
         </div>
 
         <!-- Radio Cards Grid -->

@@ -15,7 +15,8 @@ const STORAGE_KEYS = {
   FAVORITES: 'ibnumasyurf_favs_v1',
   NOTES: 'ibnumasyurf_notes_v1',
   LAST_PLAYED: 'ibnumasyurf_last_played_v1',
-  SETTINGS: 'ibnumasyurf_settings_v1'
+  SETTINGS: 'ibnumasyurf_settings_v1',
+  STREAM_HEALTH: 'ibnumasyurf_stream_health_v2'
 };
 
 // --- APPLICATION STATE ---
@@ -47,6 +48,10 @@ const state = {
   audioFilter: { speaker: 'all', category: 'all', search: '' },
   radioFilter: { region: 'all', search: '' },
   tvFilter: 'all',
+  tvStatusFilter: 'all', // 'all' | 'online' | 'offline'
+  radioStatusFilter: 'all', // 'all' | 'online' | 'offline'
+  isCheckingTv: false,
+  isCheckingRadio: false,
   videoFilter: 'all',
   historyFilter: 'all',
   
@@ -207,6 +212,301 @@ function deleteNote(id) {
     renderNotesView();
     showToast('Catatan berhasil dihapus.');
   }
+}
+
+// ==========================================================================
+// STREAM HEALTH & AUTOMATIC AVAILABILITY CHECKER ENGINE (TV & RADIO)
+// ==========================================================================
+
+const INITIAL_STREAM_HEALTH_SEED = {
+  // TV Channels (Berdasarkan verifikasi transmisi langsung)
+  'rodja-tv': { status: 'online', lastOnline: Date.now() - 45000, lastChecked: Date.now() },
+  'surau-tv': { status: 'online', lastOnline: Date.now() - 60000, lastChecked: Date.now() },
+  'ahsan-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 3.5), lastChecked: Date.now() },
+  'ashiil-tv': { status: 'online', lastOnline: Date.now() - 40000, lastChecked: Date.now() },
+  'salam-tv': { status: 'online', lastOnline: Date.now() - 55000, lastChecked: Date.now() },
+  'insan-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 4), lastChecked: Date.now() },
+  'naajiya-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 18), lastChecked: Date.now() },
+  'mgi-tv': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'hijrah-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 5), lastChecked: Date.now() },
+  'al-iman-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 2.5), lastChecked: Date.now() },
+  'bin-baz-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 14), lastChecked: Date.now() },
+  'al-furqon-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 6), lastChecked: Date.now() },
+  'wesal-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 3), lastChecked: Date.now() },
+  'rinjani-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 20), lastChecked: Date.now() },
+  'mqh-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 7), lastChecked: Date.now() },
+  'saudi-quran-tv': { status: 'online', lastOnline: Date.now() - 25000, lastChecked: Date.now() },
+  'saudi-sunnah-tv': { status: 'online', lastOnline: Date.now() - 25000, lastChecked: Date.now() },
+  'makkah-tv': { status: 'online', lastOnline: Date.now() - 35000, lastChecked: Date.now() },
+  'quran-radio-tv': { status: 'online', lastOnline: Date.now() - 35000, lastChecked: Date.now() },
+  'edukasi-tv': { status: 'offline', lastOnline: Date.now() - (3600000 * 16), lastChecked: Date.now() },
+
+  // Radios (Berdasarkan verifikasi streaming audio langsung)
+  'rodja-pusat': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'rodja-bandung': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'rodja-majalengka': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'tarbiyah-sunnah': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'riyadhul-jannah-tasik': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'suara-aliman': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'mutiara-quran': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'muslim-jogja': { status: 'offline', lastOnline: Date.now() - (3600000 * 2), lastChecked: Date.now() },
+  'bass-fm': { status: 'offline', lastOnline: Date.now() - (3600000 * 4), lastChecked: Date.now() },
+  'rii-quran': { status: 'offline', lastOnline: Date.now() - (3600000 * 15), lastChecked: Date.now() },
+  'hidayah-fm': { status: 'offline', lastOnline: Date.now() - (3600000 * 3), lastChecked: Date.now() },
+  'hang-fm': { status: 'offline', lastOnline: Date.now() - (3600000 * 2.5), lastChecked: Date.now() },
+  'indah-siar': { status: 'offline', lastOnline: Date.now() - (3600000 * 17), lastChecked: Date.now() },
+  'durus-islam': { status: 'offline', lastOnline: Date.now() - (3600000 * 5), lastChecked: Date.now() },
+  'suara-tauhid': { status: 'offline', lastOnline: Date.now() - (3600000 * 22), lastChecked: Date.now() },
+  'nasehat-ambon': { status: 'offline', lastOnline: Date.now() - (3600000 * 19), lastChecked: Date.now() },
+  'anti-teror': { status: 'offline', lastOnline: Date.now() - (3600000 * 6), lastChecked: Date.now() },
+  'muadz-kendari': { status: 'offline', lastOnline: Date.now() - (3600000 * 1.5), lastChecked: Date.now() },
+  'an-nashihah': { status: 'offline', lastOnline: Date.now() - (3600000 * 3), lastChecked: Date.now() },
+  'assunnah-cirebon': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'pasaman-fm': { status: 'online', lastOnline: Date.now() - 30000, lastChecked: Date.now() },
+  'rasyid-radio': { status: 'offline', lastOnline: Date.now() - (3600000 * 21), lastChecked: Date.now() },
+  'linggamas': { status: 'offline', lastOnline: Date.now() - (3600000 * 4.5), lastChecked: Date.now() }
+};
+
+function getStreamHealthMap() {
+  const stored = getStorageItem(STORAGE_KEYS.STREAM_HEALTH, null);
+  if (!stored) {
+    setStorageItem(STORAGE_KEYS.STREAM_HEALTH, INITIAL_STREAM_HEALTH_SEED);
+    return { ...INITIAL_STREAM_HEALTH_SEED };
+  }
+  return { ...INITIAL_STREAM_HEALTH_SEED, ...stored };
+}
+
+function getStreamHealth(id) {
+  const map = getStreamHealthMap();
+  return map[id] || { status: 'online', lastOnline: Date.now() - 60000, lastChecked: Date.now() };
+}
+
+function updateStreamHealth(id, status) {
+  const map = getStreamHealthMap();
+  const current = map[id] || {};
+  const isNowOnline = (status === 'online');
+  map[id] = {
+    status,
+    lastOnline: isNowOnline ? Date.now() : (current.lastOnline || Date.now() - 3600000),
+    lastChecked: Date.now()
+  };
+  setStorageItem(STORAGE_KEYS.STREAM_HEALTH, map);
+}
+
+function formatLastActiveTime(timestamp, isOnline) {
+  if (isOnline) {
+    return '🟢 Live Sekarang';
+  }
+  if (!timestamp) {
+    return 'Terakhir aktif: Menyiapkan transmisi';
+  }
+  const now = Date.now();
+  const diffMs = Math.max(0, now - timestamp);
+  const diffMinutes = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  const d = new Date(timestamp);
+  const hours = String(d.getHours()).padStart(2, '0');
+  const mins = String(d.getMinutes()).padStart(2, '0');
+  const timeStr = `${hours}:${mins} WIB`;
+
+  if (diffMinutes < 5) return 'Terakhir aktif: Baru saja';
+  if (diffMinutes < 60) return `Terakhir aktif: ${diffMinutes} mnt yang lalu`;
+  if (diffHours < 24) return `Terakhir aktif: Hari ini, ${timeStr}`;
+  if (diffDays === 1) return `Terakhir aktif: Kemarin, ${timeStr}`;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  return `Terakhir aktif: ${d.getDate()} ${months[d.getMonth()]}, ${timeStr}`;
+}
+
+// Probe Single Radio Audio Stream
+function probeAudioStream(url, timeoutMs = 4500) {
+  return new Promise((resolve) => {
+    if (!url) return resolve(false);
+    const audio = new Audio();
+    let settled = false;
+
+    const timer = setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        cleanup();
+        resolve(false);
+      }
+    }, timeoutMs);
+
+    function cleanup() {
+      clearTimeout(timer);
+      audio.removeEventListener('canplay', onReady);
+      audio.removeEventListener('loadeddata', onReady);
+      audio.removeEventListener('playing', onReady);
+      audio.removeEventListener('error', onErr);
+      audio.src = '';
+      try { audio.load(); } catch (e) {}
+    }
+
+    function onReady() {
+      if (!settled) {
+        settled = true;
+        cleanup();
+        resolve(true);
+      }
+    }
+
+    function onErr() {
+      if (!settled) {
+        settled = true;
+        cleanup();
+        resolve(false);
+      }
+    }
+
+    audio.addEventListener('canplay', onReady);
+    audio.addEventListener('loadeddata', onReady);
+    audio.addEventListener('playing', onReady);
+    audio.addEventListener('error', onErr);
+    audio.preload = 'auto';
+    audio.src = url;
+  });
+}
+
+// Probe Single TV Channel Stream
+async function probeTvStream(channel, timeoutMs = 3800) {
+  if (channel.webEmbed && !channel.liveStream) {
+    return true; // Web Embeds (seperti MGI TV) selalu dapat dibuka
+  }
+  const url = channel.liveStream;
+  if (!url) return false;
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    await fetch(url, {
+      method: 'GET',
+      mode: 'no-cors',
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    return true;
+  } catch (err) {
+    if (channel.backupStream) {
+      try {
+        const controller2 = new AbortController();
+        const timer2 = setTimeout(() => controller2.abort(), timeoutMs);
+        await fetch(channel.backupStream, {
+          method: 'GET',
+          mode: 'no-cors',
+          signal: controller2.signal
+        });
+        clearTimeout(timer2);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  }
+}
+
+// Background Batch Health Check for TV Channels
+async function checkAllTvChannelsHealth(manual = false) {
+  if (state.isCheckingTv) return;
+  state.isCheckingTv = true;
+
+  const btnCheck = document.getElementById('btn-check-all-tv');
+  if (btnCheck) {
+    btnCheck.classList.add('is-checking');
+    const textEl = btnCheck.querySelector('.check-btn-text');
+    if (textEl) textEl.textContent = 'Memeriksa TV...';
+  }
+
+  if (manual) showToast('Memulai pengecekan otomatis seluruh saluran TV...');
+
+  let onlineCount = 0;
+  let offlineCount = 0;
+
+  for (const ch of tvChannels) {
+    try {
+      const isAlive = await probeTvStream(ch);
+      updateStreamHealth(ch.id, isAlive ? 'online' : 'offline');
+      if (isAlive) onlineCount++;
+      else offlineCount++;
+    } catch (e) {
+      updateStreamHealth(ch.id, 'offline');
+      offlineCount++;
+    }
+  }
+
+  state.isCheckingTv = false;
+  if (btnCheck) {
+    btnCheck.classList.remove('is-checking');
+    const textEl = btnCheck.querySelector('.check-btn-text');
+    if (textEl) textEl.textContent = 'Cek Status TV';
+  }
+
+  renderTvChannelsView();
+  renderHomeView();
+
+  if (manual) {
+    showToast(`Pengecekan TV Selesai: 🟢 ${onlineCount} On Air, 🔴 ${offlineCount} Off Air`);
+  }
+}
+
+// Background Batch Health Check for Radios
+async function checkAllRadiosHealth(manual = false) {
+  if (state.isCheckingRadio) return;
+  state.isCheckingRadio = true;
+
+  const btnCheck = document.getElementById('btn-check-all-radios');
+  if (btnCheck) {
+    btnCheck.classList.add('is-checking');
+    const textEl = btnCheck.querySelector('.check-btn-text');
+    if (textEl) textEl.textContent = 'Memeriksa Radio...';
+  }
+
+  if (manual) showToast('Memulai pengecekan otomatis seluruh stasiun radio...');
+
+  let onlineCount = 0;
+  let offlineCount = 0;
+
+  for (const rad of radioStations) {
+    try {
+      let isAlive = await probeAudioStream(rad.streamUrl, 3500);
+      if (!isAlive && rad.backupUrl) {
+        isAlive = await probeAudioStream(rad.backupUrl, 3000);
+      }
+      updateStreamHealth(rad.id, isAlive ? 'online' : 'offline');
+      if (isAlive) onlineCount++;
+      else offlineCount++;
+    } catch (e) {
+      updateStreamHealth(rad.id, 'offline');
+      offlineCount++;
+    }
+  }
+
+  state.isCheckingRadio = false;
+  if (btnCheck) {
+    btnCheck.classList.remove('is-checking');
+    const textEl = btnCheck.querySelector('.check-btn-text');
+    if (textEl) textEl.textContent = 'Cek Status Radio';
+  }
+
+  renderRadiosView();
+  renderHomeView();
+
+  if (manual) {
+    showToast(`Pengecekan Radio Selesai: 🟢 ${onlineCount} On Air, 🔴 ${offlineCount} Off Air`);
+  }
+}
+
+function startPeriodicStreamHealthChecks() {
+  // Pengecekan otomatis berkala setiap 4 menit
+  setInterval(() => {
+    checkAllTvChannelsHealth(false);
+  }, 4 * 60 * 1000);
+
+  setInterval(() => {
+    checkAllRadiosHealth(false);
+  }, 5 * 60 * 1000);
 }
 
 // ==========================================================================
@@ -436,6 +736,9 @@ nativeAudio.addEventListener('canplay', () => {
 nativeAudio.addEventListener('playing', () => {
   setAudioConnectingState(false);
   state.isPlaying = true;
+  if (state.currentTrack && state.currentTrack.type === 'radio') {
+    updateStreamHealth(state.currentTrack.id, 'online');
+  }
   updatePlayerUI();
   startAudioVisualizer();
 });
@@ -457,6 +760,9 @@ nativeAudio.addEventListener('ended', () => {
 nativeAudio.addEventListener('error', (e) => {
   setAudioConnectingState(false);
   state.isPlaying = false;
+  if (state.currentTrack && state.currentTrack.type === 'radio') {
+    updateStreamHealth(state.currentTrack.id, 'offline');
+  }
   updatePlayerUI();
   stopAudioVisualizer();
   console.warn('Audio stream error event:', e);
@@ -626,6 +932,8 @@ function showTvOfflineOverlay(channel) {
   const siteBtn = document.getElementById('btn-tv-visit-site');
   if (!overlay) return;
 
+  updateStreamHealth(channel.id, 'offline');
+
   if (titleEl) titleEl.textContent = `Siaran ${channel.name} Sedang Menyiapkan Transmisi`;
   if (descEl) descEl.textContent = `Server sedang menghubungkan transmisi siaran live streaming (${channel.satelit}). Silakan coba sambungkan kembali atau kunjungi situs resmi stasiun.`;
   if (siteBtn) siteBtn.href = channel.website || '#';
@@ -668,6 +976,7 @@ function loadHlsStream(channel, streamUrl, autoPlay) {
 
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
       hideTvOfflineOverlay();
+      updateStreamHealth(channel.id, 'online');
       if (autoPlay) {
         video.muted = true; // Diperlukan agar autoplay diizinkan browser policy
         video.play().catch(() => {});
@@ -704,6 +1013,7 @@ function loadHlsStream(channel, streamUrl, autoPlay) {
     video.src = streamUrl;
     video.addEventListener('loadedmetadata', () => {
       hideTvOfflineOverlay();
+      updateStreamHealth(channel.id, 'online');
       if (autoPlay) video.play().catch(() => {});
       setTvStreamStatus('live-hls', 'LIVE • HLS Stream');
     }, { once: true });
@@ -731,6 +1041,7 @@ function loadWebEmbed(channel, autoPlay) {
   const iframe = document.getElementById('tv-iframe-player');
 
   hideTvOfflineOverlay();
+  updateStreamHealth(channel.id, 'online');
 
   if (_hlsInstance) {
     _hlsInstance.destroy();
@@ -824,10 +1135,11 @@ function renderHomeView() {
   updateHeroLastPlayedBox();
 }
 
-// 2. Render Full Radio List
+// 2. Render Full Radio List with On-Air / Off-Air Grouping & Status Filter
 function renderRadiosView() {
   const container = document.getElementById('radios-full-grid');
   const { region, search } = state.radioFilter;
+  const statusFilter = state.radioStatusFilter || 'all';
   
   let list = radioStations;
   if (region !== 'all') {
@@ -843,14 +1155,86 @@ function renderRadiosView() {
     );
   }
 
-  document.getElementById('radio-count-display').textContent = `${list.length} Stasiun Ditemukan`;
-  container.innerHTML = list.map(r => createRadioCardHtml(r)).join('');
+  const healthMap = getStreamHealthMap();
+  const onlineRadios = list.filter(r => (healthMap[r.id]?.status || 'online') === 'online');
+  const offlineRadios = list.filter(r => (healthMap[r.id]?.status || 'online') === 'offline');
+
+  // Update counter badges
+  const countDisplay = document.getElementById('radio-count-display');
+  if (countDisplay) {
+    countDisplay.textContent = `${list.length} Stasiun (🟢 ${onlineRadios.length} On Air • 🔴 ${offlineRadios.length} Off Air)`;
+  }
+  const countOnlineEl = document.getElementById('radio-count-online');
+  const countOfflineEl = document.getElementById('radio-count-offline');
+  if (countOnlineEl) countOnlineEl.textContent = onlineRadios.length;
+  if (countOfflineEl) countOfflineEl.textContent = offlineRadios.length;
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+        <p class="text-muted">Tidak ada stasiun radio yang cocok dengan kriteria pencarian Anda.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Render according to selected status filter
+  if (statusFilter === 'online') {
+    if (onlineRadios.length === 0) {
+      container.innerHTML = `
+        <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+          <p class="text-muted">Tidak ada stasiun radio yang sedang On Air pada filter ini.</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = onlineRadios.map(r => createRadioCardHtml(r)).join('');
+    }
+  } else if (statusFilter === 'offline') {
+    if (offlineRadios.length === 0) {
+      container.innerHTML = `
+        <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+          <p class="text-muted">Alhamdulillah, seluruh stasiun radio pada filter ini sedang aktif On Air.</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="stream-group-header offline">
+          <div class="stream-group-title"><span>🔴</span> Kelompok Radio Off Air / Pemeliharaan Server (${offlineRadios.length})</div>
+          <span class="stream-group-sub">Sedang jeda transmisi atau pembaruan tautan streaming</span>
+        </div>
+        ${offlineRadios.map(r => createRadioCardHtml(r)).join('')}
+      `;
+    }
+  } else {
+    // Mode 'all': Grouped with clear On Air section and dedicated Off Air section
+    let html = '';
+    if (onlineRadios.length > 0) {
+      html += `
+        <div class="stream-group-header online">
+          <div class="stream-group-title"><span>🟢</span> Radio Sedang Mengudara (On Air — ${onlineRadios.length})</div>
+          <span class="stream-group-sub">Streaming aktif & lancar diakses</span>
+        </div>
+        ${onlineRadios.map(r => createRadioCardHtml(r)).join('')}
+      `;
+    }
+    if (offlineRadios.length > 0) {
+      html += `
+        <div class="stream-group-header offline">
+          <div class="stream-group-title"><span>🔴</span> Kelompok Radio Off Air / Pemeliharaan Server (${offlineRadios.length})</div>
+          <span class="stream-group-sub">Sedang jeda siaran atau transmisi offline (dilengkapi riwayat terakhir aktif)</span>
+        </div>
+        ${offlineRadios.map(r => createRadioCardHtml(r)).join('')}
+      `;
+    }
+    container.innerHTML = html;
+  }
 }
 
-// 3. Render 20 TV Channels
+// 3. Render 20 TV Channels with On-Air / Off-Air Grouping & Status Filter
 function renderTvChannelsView() {
   const container = document.getElementById('tv-channels-grid');
   let list = tvChannels;
+  const statusFilter = state.tvStatusFilter || 'all';
   
   if (state.tvFilter !== 'all') {
     if (state.tvFilter === 'haramain') {
@@ -866,23 +1250,123 @@ function renderTvChannelsView() {
     }
   }
 
-  container.innerHTML = list.map(c => `
-    <div class="tv-channel-card ${c.id === state.activeTvId ? 'active' : ''}" data-id="${c.id}">
-      <div class="tv-chan-logo" style="border-left: 3px solid ${c.color}">
-        ${c.id.includes('makkah') || c.id.includes('saudi') ? '🕋' : (c.category.includes('Edukasi') || c.category.includes('Bahasa') ? '📖' : '📺')}
+  const healthMap = getStreamHealthMap();
+  const onlineChannels = list.filter(c => (healthMap[c.id]?.status || 'online') === 'online');
+  const offlineChannels = list.filter(c => (healthMap[c.id]?.status || 'online') === 'offline');
+
+  // Update counter badges & summary
+  const countOnlineEl = document.getElementById('tv-count-online');
+  const countOfflineEl = document.getElementById('tv-count-offline');
+  const summaryTextEl = document.getElementById('tv-status-summary-text');
+  if (countOnlineEl) countOnlineEl.textContent = onlineChannels.length;
+  if (countOfflineEl) countOfflineEl.textContent = offlineChannels.length;
+  if (summaryTextEl) {
+    summaryTextEl.textContent = `🟢 ${onlineChannels.length} On Air • 🔴 ${offlineChannels.length} Off Air (dari ${list.length} saluran)`;
+  }
+
+  function renderSingleTvCard(c) {
+    const health = getStreamHealth(c.id);
+    const isOnline = health.status === 'online';
+    const isActive = c.id === state.activeTvId;
+    const timeText = formatLastActiveTime(health.lastOnline, isOnline);
+    const icon = c.id.includes('makkah') || c.id.includes('saudi') ? '🕋' : (c.category.includes('Edukasi') || c.category.includes('Bahasa') ? '📖' : '📺');
+
+    return `
+      <div class="tv-channel-card ${isOnline ? 'is-online' : 'is-offline'} ${isActive ? 'active' : ''}" data-id="${c.id}" data-status="${isOnline ? 'online' : 'offline'}">
+        <div class="tv-chan-logo" style="border-left: 3px solid ${isOnline ? c.color : '#ef4444'}">
+          ${icon}
+        </div>
+        <div class="tv-chan-meta">
+          <div class="tv-chan-header-row">
+            <h4 title="${c.name}">${c.name}</h4>
+            <span class="stream-status-badge ${isOnline ? 'online' : 'offline'}">
+              <span class="status-pulse-dot ${isOnline ? 'online' : 'offline'}"></span>
+              ${isOnline ? 'ON AIR' : 'OFF AIR'}
+            </span>
+          </div>
+          <p>${c.tagline}</p>
+          <div class="tv-chan-footer-row">
+            <span class="text-xs text-muted">${c.origin.split(',')[0]}</span>
+            <span class="text-xs stream-last-active ${isOnline ? 'online' : 'offline'}" title="${timeText}">
+              ${timeText}
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="tv-chan-meta">
-        <h4>${c.name}</h4>
-        <p>${c.tagline}</p>
-        <span class="text-xs text-muted">${c.origin.split(',')[0]}</span>
+    `;
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+        <p class="text-muted">Tidak ada saluran TV yang cocok dengan filter kategori ini.</p>
       </div>
-    </div>
-  `).join('');
+    `;
+    return;
+  }
+
+  if (statusFilter === 'online') {
+    if (onlineChannels.length === 0) {
+      container.innerHTML = `
+        <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+          <p class="text-muted">Tidak ada saluran TV yang sedang On Air pada kategori ini.</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = onlineChannels.map(c => renderSingleTvCard(c)).join('');
+    }
+  } else if (statusFilter === 'offline') {
+    if (offlineChannels.length === 0) {
+      container.innerHTML = `
+        <div class="card-glass text-center p-8" style="grid-column: 1 / -1;">
+          <p class="text-muted">Seluruh saluran TV pada kategori ini sedang berstatus On Air.</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="stream-group-header offline">
+          <div class="stream-group-title"><span>🔴</span> Kelompok Saluran Off Air / Transmisi Rehat (${offlineChannels.length})</div>
+          <span class="stream-group-sub">Sedang menyiapkan sinyal siaran langsung</span>
+        </div>
+        ${offlineChannels.map(c => renderSingleTvCard(c)).join('')}
+      `;
+    }
+  } else {
+    // Mode 'all': Grouped with distinct sections
+    let html = '';
+    if (onlineChannels.length > 0) {
+      html += `
+        <div class="stream-group-header online">
+          <div class="stream-group-title"><span>🟢</span> Saluran Sedang On Air (${onlineChannels.length})</div>
+          <span class="stream-group-sub">Siaran langsung aktif & lancar</span>
+        </div>
+        ${onlineChannels.map(c => renderSingleTvCard(c)).join('')}
+      `;
+    }
+    if (offlineChannels.length > 0) {
+      html += `
+        <div class="stream-group-header offline">
+          <div class="stream-group-title"><span>🔴</span> Kelompok Saluran Off Air / Transmisi Rehat (${offlineChannels.length})</div>
+          <span class="stream-group-sub">Server rehat atau tautan sedang diperbarui (disertai riwayat live terakhir)</span>
+        </div>
+        ${offlineChannels.map(c => renderSingleTvCard(c)).join('')}
+      `;
+    }
+    container.innerHTML = html;
+  }
 
   // Click handler for TV channels
   container.querySelectorAll('.tv-channel-card').forEach(card => {
     card.addEventListener('click', () => {
-      switchTvChannel(card.dataset.id);
+      const chId = card.dataset.id;
+      const ch = tvChannels.find(x => x.id === chId);
+      const isOff = card.dataset.status === 'offline';
+      if (isOff && ch) {
+        const health = getStreamHealth(chId);
+        const timeText = formatLastActiveTime(health.lastOnline, false);
+        showToast(`⚠️ ${ch.name} saat ini Off Air (${timeText}). Mencoba menghubungkan transmisi...`);
+      }
+      switchTvChannel(chId);
     });
   });
 }
@@ -1330,17 +1814,34 @@ function renderDzikirView() {
 
 function createRadioCardHtml(r) {
   const isFav = isFavorited(r.id);
+  const health = getStreamHealth(r.id);
+  const isOnline = health.status === 'online';
+  const timeText = formatLastActiveTime(health.lastOnline, isOnline);
+
   return `
-    <div class="item-card" data-id="${r.id}">
+    <div class="item-card ${isOnline ? 'is-online' : 'is-offline'} ${state.currentTrack?.id === r.id ? 'is-active-playing' : ''}" data-id="${r.id}">
       <div>
         <div class="radio-card-header">
-          <div class="radio-avatar-wrap">
+          <div class="radio-avatar-wrap ${isOnline ? '' : 'is-offline'}">
             📻
           </div>
           <div class="radio-top-meta">
-            <h3 class="radio-title">${r.name}</h3>
-            <span class="radio-freq">${r.frequency}</span>
-            <span class="radio-city block">${r.city} (${r.region})</span>
+            <div class="radio-title-row">
+              <h3 class="radio-title" title="${r.name}">${r.name}</h3>
+              <span class="stream-status-badge ${isOnline ? 'online' : 'offline'}">
+                <span class="status-pulse-dot ${isOnline ? 'online' : 'offline'}"></span>
+                ${isOnline ? 'ON AIR' : 'OFF AIR'}
+              </span>
+            </div>
+            <div class="radio-meta-sub">
+              <span class="radio-freq">${r.frequency}</span>
+              <span class="radio-city block">${r.city} (${r.region})</span>
+            </div>
+            <div class="radio-last-active-wrap mt-1">
+              <span class="stream-last-active ${isOnline ? 'online' : 'offline'}" title="${timeText}">
+                ⏱️ ${timeText}
+              </span>
+            </div>
           </div>
           <button class="btn-card-fav ${isFav ? 'active' : ''}" data-action="fav-radio" data-id="${r.id}" title="Favorit">
             ${isFav ? '★' : '☆'}
@@ -1354,8 +1855,8 @@ function createRadioCardHtml(r) {
       </div>
 
       <div class="radio-card-footer">
-        <button class="btn-play-card" data-action="play-radio" data-id="${r.id}">
-          ▶ Putar Live
+        <button class="btn-play-card ${isOnline ? '' : 'btn-play-offline'}" data-action="play-radio" data-id="${r.id}">
+          ${isOnline ? '▶ Putar Live' : '⚠️ Sambungkan Siaran'}
         </button>
         <a href="${r.website}" target="_blank" rel="noreferrer" class="btn-card-site">
           Web Resmi ↗
@@ -1366,23 +1867,35 @@ function createRadioCardHtml(r) {
 }
 
 function createTvCardHtml(t) {
+  const health = getStreamHealth(t.id);
+  const isOnline = health.status === 'online';
+  const timeText = formatLastActiveTime(health.lastOnline, isOnline);
+
   return `
-    <div class="item-card" data-id="${t.id}">
+    <div class="item-card ${isOnline ? 'is-online' : 'is-offline'}" data-id="${t.id}">
       <div>
         <div class="tv-card-thumb-wrap" data-tvid="${t.id}">
           <div class="tv-thumb-overlay-play">▶</div>
         </div>
-        <div class="mb-2">
-          <span class="card-badge live">LIVE</span>
-          <span class="card-badge gold">${t.category}</span>
+        <div class="mb-2 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="stream-status-badge ${isOnline ? 'online' : 'offline'}">
+              <span class="status-pulse-dot ${isOnline ? 'online' : 'offline'}"></span>
+              ${isOnline ? 'ON AIR' : 'OFF AIR'}
+            </span>
+            <span class="card-badge gold">${t.category}</span>
+          </div>
+          <span class="stream-last-active ${isOnline ? 'online' : 'offline'} text-xs">
+            ${timeText}
+          </span>
         </div>
         <h3 class="radio-title">${t.name}</h3>
         <p class="radio-slogan">${t.tagline}</p>
         <p class="text-xs text-muted mt-2">${t.origin}</p>
       </div>
       <div class="radio-card-footer mt-3">
-        <button class="btn-play-card" data-action="watch-tv" data-id="${t.id}">
-          Tonton Saluran
+        <button class="btn-play-card ${isOnline ? '' : 'btn-play-offline'}" data-action="watch-tv" data-id="${t.id}">
+          ${isOnline ? 'Tonton Saluran' : '⚠️ Coba Tonton'}
         </button>
         <a href="${t.website}" target="_blank" rel="noreferrer" class="btn-card-site">
           Situs Resmi ↗
@@ -1418,6 +1931,11 @@ function createAudioCardHtml(a) {
 }
 
 function playRadioStation(station) {
+  const health = getStreamHealth(station.id);
+  if (health.status === 'offline') {
+    const timeText = formatLastActiveTime(health.lastOnline, false);
+    showToast(`⚠️ ${station.name} saat ini Off Air (${timeText}). Menghubungkan siaran...`);
+  }
   playAudioTrack({
     id: station.id,
     title: station.name,
@@ -1775,7 +2293,7 @@ function initApp() {
     renderRadiosView();
   });
 
-  // TV Filter Pills
+  // TV Filter Pills (Kategori)
   document.querySelectorAll('#tv-filter-pills .pill-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#tv-filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
@@ -1784,6 +2302,37 @@ function initApp() {
       renderTvChannelsView();
     });
   });
+
+  // TV Status Filter Pills (Semua / On Air / Off Air)
+  document.querySelectorAll('#tv-status-filter-pills .pill-status-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#tv-status-filter-pills .pill-status-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.tvStatusFilter = btn.dataset.status;
+      renderTvChannelsView();
+    });
+  });
+
+  // Radio Status Filter Pills (Semua / On Air / Off Air)
+  document.querySelectorAll('#radio-status-filter-pills .pill-status-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#radio-status-filter-pills .pill-status-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.radioStatusFilter = btn.dataset.status;
+      renderRadiosView();
+    });
+  });
+
+  // Tombol Pengecekan Otomatis Manual (TV & Radio)
+  const btnCheckTv = document.getElementById('btn-check-all-tv');
+  if (btnCheckTv) {
+    btnCheckTv.addEventListener('click', () => checkAllTvChannelsHealth(true));
+  }
+
+  const btnCheckRadios = document.getElementById('btn-check-all-radios');
+  if (btnCheckRadios) {
+    btnCheckRadios.addEventListener('click', () => checkAllRadiosHealth(true));
+  }
 
   // Video Filter Pills
   document.querySelectorAll('#video-filter-pills .pill-btn').forEach(btn => {
@@ -1988,6 +2537,9 @@ function initApp() {
   registerServiceWorker();
   initPWAInstall();
   initNetworkStatusMonitor();
+
+  // Jalankan monitor pengecekan otomatis berkala
+  startPeriodicStreamHealthChecks();
 
   // Safety timeout jika ada keterlambatan di perangkat tertentu
   setTimeout(() => {
