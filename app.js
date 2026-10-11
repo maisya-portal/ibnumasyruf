@@ -53,6 +53,7 @@ const state = {
   isCheckingTv: false,
   isCheckingRadio: false,
   videoFilter: 'all',
+  videoKidsChannel: 'all',
   historyFilter: 'all',
   
   // Audio Visualizer
@@ -1455,8 +1456,11 @@ function renderAudioView() {
 // 5. Render Video & Dei Kids
 function renderVideosView() {
   const container = document.getElementById('videos-grid');
+  if (!container) return;
+  const kidsFilterWrapper = document.getElementById('kids-channels-filter-wrapper');
   let list = kajianVideoList;
 
+  // Filter Kategori Utama
   if (state.videoFilter !== 'all') {
     if (state.videoFilter === 'kids') {
       list = list.filter(v => v.isKids);
@@ -1465,15 +1469,54 @@ function renderVideosView() {
     }
   }
 
+  // Filter Sub-Kanal Edukasi Anak
+  if (state.videoKidsChannel !== 'all') {
+    list = list.filter(v => v.isKids && v.kidsChannel === state.videoKidsChannel);
+  }
+
+  // Highlight wrapper kanal anak saat mode kids aktif
+  if (kidsFilterWrapper) {
+    if (state.videoFilter === 'kids' || state.videoKidsChannel !== 'all') {
+      kidsFilterWrapper.classList.add('highlighted');
+    } else {
+      kidsFilterWrapper.classList.remove('highlighted');
+    }
+  }
+
+  // Update badge counter video edukasi anak
+  const countBadge = document.getElementById('kids-count-badge');
+  if (countBadge) {
+    const totalKids = kajianVideoList.filter(v => v.isKids).length;
+    if (state.videoKidsChannel !== 'all') {
+      const filteredKidsCount = kajianVideoList.filter(v => v.isKids && v.kidsChannel === state.videoKidsChannel).length;
+      countBadge.textContent = `${filteredKidsCount} Video (${state.videoKidsChannel})`;
+    } else {
+      countBadge.textContent = `${totalKids} Video Edukasi`;
+    }
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state-card card-glass" style="grid-column: 1 / -1; text-align: center; padding: 48px 20px;">
+        <div style="font-size: 2.8rem; margin-bottom: 12px;">🎬</div>
+        <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 6px;">Tidak ada video yang ditemukan</h4>
+        <p class="text-sm text-muted">Silakan pilih kategori atau kanal edukasi anak lainnya.</p>
+      </div>
+    `;
+    return;
+  }
+
   container.innerHTML = list.map(v => `
-    <div class="item-card" data-id="${v.id}">
+    <div class="item-card ${v.isKids ? 'item-card-kids' : ''}" data-id="${v.id}">
       <div>
         <div class="tv-card-thumb-wrap" data-ytid="${v.youtubeId}">
-          <img src="${v.thumbnail}" alt="${v.title}" onerror="this.src='https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=500&q=80'">
+          <img src="${v.thumbnail}" alt="${v.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=500&q=80'">
           <div class="tv-thumb-overlay-play">▶</div>
+          ${v.isKids && v.kidsChannel ? `<div class="kids-card-corner-tag">👶 ${v.kidsChannel}</div>` : ''}
         </div>
-        <div class="mb-2">
+        <div class="mb-2" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <span class="card-badge ${v.isKids ? 'gold' : 'emerald'}">${v.category}</span>
+          ${v.isKids && v.kidsChannel ? `<span class="card-badge badge-kids-channel">${v.kidsChannel}</span>` : ''}
         </div>
         <h3 class="radio-title">${v.title}</h3>
         <p class="radio-slogan">${v.speaker} • ${v.channel}</p>
@@ -2340,6 +2383,29 @@ function initApp() {
       document.querySelectorAll('#video-filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       state.videoFilter = btn.dataset.vfilter;
+      if (state.videoFilter !== 'kids') {
+        state.videoKidsChannel = 'all';
+        document.querySelectorAll('#kids-channel-pills .pill-btn-kids').forEach(b => {
+          b.classList.toggle('active', b.dataset.kchannel === 'all');
+        });
+      }
+      renderVideosView();
+    });
+  });
+
+  // Kids Channel Filter Pills
+  document.querySelectorAll('#kids-channel-pills .pill-btn-kids').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#kids-channel-pills .pill-btn-kids').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.videoKidsChannel = btn.dataset.kchannel;
+
+      if (state.videoKidsChannel !== 'all') {
+        state.videoFilter = 'kids';
+        document.querySelectorAll('#video-filter-pills .pill-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.vfilter === 'kids');
+        });
+      }
       renderVideosView();
     });
   });

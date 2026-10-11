@@ -1,9 +1,14 @@
 // ==========================================================================
-// KOLEKSI VIDEO KAJIAN SUNNAH & DEI KIDS TV TERPILIH
-// 100% Video Asli Aktif dari Kanal Dakwah Ahlussunnah Resmi
+// KOLEKSI VIDEO KAJIAN SUNNAH & VIDEO EDUKASI ANAK ISLAMI
+// 100% Video Asli Aktif dari Kanal Dakwah Ahlussunnah & Edukasi Anak Resmi
+// Kanal Anak: Kak Erlan Bercerita, Yufid Kids, Rofif Kids, Rodja Ceria,
+// Muslim Zone, Annawawi TV, dan Keluarga Hamzi.
 // ==========================================================================
 
 export const kajianVideoList = [
+  // --------------------------------------------------------------------------
+  // KAJIAN DEWASA / UMUM
+  // --------------------------------------------------------------------------
   {
     id: "vid-01",
     title: "Kajian Aqidah: Makna Nama-Nama Hari Kiamat",
@@ -117,34 +122,6 @@ export const kajianVideoList = [
     isKids: false
   },
   {
-    id: "vid-09",
-    title: "Dei Kids: Adab Anak Muslim Sebelum & di Kamar Mandi",
-    speaker: "Kak Erlan & Tim Cerita Islam",
-    channel: "Kak Erlan Bercerita",
-    category: "Anak & Balita (Dei Kids)",
-    duration: "16:45",
-    youtubeId: "0qwboNPKSNM",
-    thumbnail: "https://i.ytimg.com/vi/0qwboNPKSNM/hqdefault.jpg",
-    description: "Edukasi animasi adab harian anak muslim sesuai sunnah: doa masuk dan keluar kamar mandi, menjaga kebersihan, dan thaharah.",
-    views: "210 rb",
-    date: "2024",
-    isKids: true
-  },
-  {
-    id: "vid-10",
-    title: "Dei Kids: Belajar Olahraga Sunnah Berenang & Menjaga Kebugaran",
-    speaker: "Kak Erlan & Tim Cerita Islam",
-    channel: "Kak Erlan Bercerita",
-    category: "Anak & Balita (Dei Kids)",
-    duration: "21:30",
-    youtubeId: "RGBeqvHcPuY",
-    thumbnail: "https://i.ytimg.com/vi/RGBeqvHcPuY/hqdefault.jpg",
-    description: "Petualangan seru dan edukatif Kak Yogi mengajak adik-adik muslim berolahraga renang, menjaga kesehatan, dan mensyukuri nikmat tubuh sehat.",
-    views: "185 rb",
-    date: "2024",
-    isKids: true
-  },
-  {
     id: "vid-11",
     title: "Kajian Hikmah: Pilihan Allah Pasti yang Terbaik",
     speaker: "Ustadz Dr. Firanda Andirja, Lc., M.A.",
@@ -171,5 +148,670 @@ export const kajianVideoList = [
     views: "140 rb",
     date: "2024",
     isKids: false
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 1: KAK ERLAN BERCERITA (DEI KIDS)
+  // Dongeng & cerita anak Islami edukatif sesuai sunnah
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-erlan-01",
+    title: "Dei Kids: Adab Anak Muslim Sebelum & di Kamar Mandi",
+    speaker: "Kak Erlan & Tim Cerita Islam",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "11:52",
+    youtubeId: "0qwboNPKSNM",
+    thumbnail: "https://i.ytimg.com/vi/0qwboNPKSNM/hqdefault.jpg",
+    description: "Edukasi animasi adab harian anak muslim sesuai sunnah: doa masuk dan keluar kamar mandi, menjaga kebersihan, dan thaharah.",
+    views: "210 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-erlan-02",
+    title: "Dei Kids: Belajar Olahraga Sunnah Berenang & Menjaga Kebugaran",
+    speaker: "Kak Erlan & Kak Yogi",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "27:48",
+    youtubeId: "RGBeqvHcPuY",
+    thumbnail: "https://i.ytimg.com/vi/RGBeqvHcPuY/hqdefault.jpg",
+    description: "Petualangan seru Kak Yogi mengajak adik-adik muslim berolahraga renang sesuai sunnah, menjaga kesehatan dan mensyukuri nikmat tubuh sehat.",
+    views: "185 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-erlan-03",
+    title: "Kak Erlan Bercerita: Petualangan Mencari Dino & Tadabbur Ciptaan Allah",
+    speaker: "Kak Yogi & Kak Erlan",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "28:53",
+    youtubeId: "-adl3A1_9nE",
+    thumbnail: "https://i.ytimg.com/vi/-adl3A1_9nE/hqdefault.jpg",
+    description: "Petualangan seru dan edukatif mengenal fosil hewan purba sambil mentadabburi keagungan Allah Sang Maha Pencipta segala sesuatu.",
+    views: "160 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-erlan-04",
+    title: "Kak Erlan Bercerita: Petualangan Donut Slide & Adab Bermain Bersama",
+    speaker: "Kak Yogi & Kak Erlan",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "27:02",
+    youtubeId: "3sr4Cp1C1NU",
+    thumbnail: "https://i.ytimg.com/vi/3sr4Cp1C1NU/hqdefault.jpg",
+    description: "Keseruan bermain donut slide dengan bimbingan adab antre, menjaga keselamatan, saling mengalah, dan menyayangi sesama teman muslim.",
+    views: "140 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-erlan-05",
+    title: "Kayfa Naquul: Cara Ngomong Bahasa Arab dari Bangun Tidur hingga Kamar Mandi",
+    speaker: "Kakak Faris & Kak Erlan",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "04:05",
+    youtubeId: "FrtZkTum78c",
+    thumbnail: "https://i.ytimg.com/vi/FrtZkTum78c/hqdefault.jpg",
+    description: "Belajar percakapan bahasa Arab praktis sehari-hari untuk anak muslim: bangun tidur, masuk dan keluar kamar mandi, serta doa harian.",
+    views: "95 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-erlan-06",
+    title: "Kak Yogi The Explorer: Mengenal Si Lucu Kapibara & Menyayangi Hewan",
+    speaker: "Kak Yogi & Kak Erlan",
+    channel: "Kak Erlan Bercerita",
+    kidsChannel: "Kak Erlan",
+    category: "Anak & Balita (Dei Kids)",
+    duration: "21:05",
+    youtubeId: "woPtf-R2VM4",
+    thumbnail: "https://i.ytimg.com/vi/woPtf-R2VM4/hqdefault.jpg",
+    description: "Mengenal hewan unik kapibara, habitatnya, serta ajaran mulia Islam tentang kasih sayang dan kebaikan kepada hewan ciptaan Allah.",
+    views: "175 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 2: YUFID KIDS
+  // Animasi Cerita Ubay, huruf hijaiyah, doa harian, dan akhlak anak shalih
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-yufid-01",
+    title: "Cerita Ubay: Membereskan Mainan Ternyata Tidak Mudah! | Belajar Disiplin",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "07:51",
+    youtubeId: "GNe-8K78pmU",
+    thumbnail: "https://i.ytimg.com/vi/GNe-8K78pmU/hqdefault.jpg",
+    description: "Animasi edukatif mengajarkan anak-anak pentingnya merapikan mainan sendiri, berbakti kepada orang tua, dan bertanggung jawab di rumah.",
+    views: "320 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-02",
+    title: "Cerita Ubay: Saling Memaafkan | Akhlak Mulia Anak Muslim",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "05:26",
+    youtubeId: "S723xJhva-k",
+    thumbnail: "https://i.ytimg.com/vi/S723xJhva-k/hqdefault.jpg",
+    description: "Kisah menyentuh hati Ubay belajar memaafkan kesalahan teman, menahan amarah, dan membalas keburukan dengan kebaikan sesuai sunnah.",
+    views: "410 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-03",
+    title: "Cerita Ubay: Musibah Susu Terakhir | Belajar Sabar & Berprasangka Baik",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "04:51",
+    youtubeId: "PtqOh_8pjyY",
+    thumbnail: "https://i.ytimg.com/vi/PtqOh_8pjyY/hqdefault.jpg",
+    description: "Mengajarkan anak muslim untuk selalu bersabar ketika menghadapi hal yang tidak disukai dan yakin bahwa di balik setiap musibah ada hikmah.",
+    views: "280 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-04",
+    title: "Belajar Nama Hari Senin Sampai Ahad Bersama Ubay | Cerita Anak Islami",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "08:13",
+    youtubeId: "t7a8yuuVQZ4",
+    thumbnail: "https://i.ytimg.com/vi/t7a8yuuVQZ4/hqdefault.jpg",
+    description: "Mengenal nama-nama hari dalam sepekan disertai amalan sunnah harian: puasa Senin-Kamis, keutamaan hari Jum'at, dan jadwal kebaikan.",
+    views: "520 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-05",
+    title: "Cerita Ubay: Jangan Sombong! Semua Hanya Titipan Allah Ta'ala",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "03:16",
+    youtubeId: "JCDD0FaS9jc",
+    thumbnail: "https://i.ytimg.com/vi/JCDD0FaS9jc/hqdefault.jpg",
+    description: "Pelajaran berharga agar tidak membanggakan diri atas barang atau kepandaian yang dimiliki, karena semua rezeki berasal dari Allah semata.",
+    views: "390 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-06",
+    title: "Cerita Ubay: Doa Terhindar dari Sifat Malas & Kiat Menjadi Anak Rajin",
+    speaker: "Ubay & Tim Yufid Kids",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "03:15",
+    youtubeId: "eU-cQBWCST0",
+    thumbnail: "https://i.ytimg.com/vi/eU-cQBWCST0/hqdefault.jpg",
+    description: "Doa perlindungan dari rasa malas yang diajarkan Rasulullah SAW, serta kiat praktis agar anak semangat beribadah dan belajar.",
+    views: "450 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-07",
+    title: "Belajar Huruf Hijaiyah Eps 14: Huruf Wawu, Huruf Ha, dan Huruf Ya",
+    speaker: "Ustadz Pembimbing Yufid",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "16:53",
+    youtubeId: "c85n3x7LZDo",
+    thumbnail: "https://i.ytimg.com/vi/c85n3x7LZDo/hqdefault.jpg",
+    description: "Pembelajaran makharijul huruf dan bentuk huruf hijaiyah dengan animasi menarik, audio pelafalan jelas, dan pengulangan ramah anak.",
+    views: "650 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-yufid-08",
+    title: "Belajar Huruf Hijaiyah Eps 13: Huruf Mim dan Huruf Nun",
+    speaker: "Ustadz Pembimbing Yufid",
+    channel: "Yufid Kids",
+    kidsChannel: "Yufid Kids",
+    category: "Anak & Balita (Yufid Kids)",
+    duration: "12:37",
+    youtubeId: "sHS7qsKJzJU",
+    thumbnail: "https://i.ytimg.com/vi/sHS7qsKJzJU/hqdefault.jpg",
+    description: "Mengenal cara membaca huruf Mim dan Nun berharakat fathah, kasrah, dan dhammah untuk persiapan membaca Al-Qur'an sejak dini.",
+    views: "580 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 3: ROFIF KIDS
+  // Belajar shalat, anggota tubuh, bahasa Arab, dan tuntunan dasar Islam
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-rofif-01",
+    title: "Rofif Kids: Tata Cara Shalat Sesuai Sunnah - Duduk Diantara Dua Sujud",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "01:46",
+    youtubeId: "ejFh-52U5yA",
+    thumbnail: "https://i.ytimg.com/vi/ejFh-52U5yA/hqdefault.jpg",
+    description: "Panduan visual posisi duduk iftirasy di antara dua sujud, letak jari-jari kaki, serta bacaan doa yang shahih sesuai sunnah.",
+    views: "190 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rofif-02",
+    title: "Rofif Kids: Bacaan Sujud Sesuai Sunnah Nabi Shallallahu 'Alaihi Wasallam",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "01:21",
+    youtubeId: "_BDkxDNtuiY",
+    thumbnail: "https://i.ytimg.com/vi/_BDkxDNtuiY/hqdefault.jpg",
+    description: "Menghafal bacaan sujud Subhana Rabbiyal A'la dengan pelafalan perlahan dan benar agar shalat anak semakin khusyuk.",
+    views: "220 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rofif-03",
+    title: "Rofif Kids: Gerakan Sujud yang Benar & 7 Anggota Sujud",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "04:06",
+    youtubeId: "fTVmGXPV6XE",
+    thumbnail: "https://i.ytimg.com/vi/fTVmGXPV6XE/hqdefault.jpg",
+    description: "Mengenal 7 anggota tubuh yang harus menempel di lantai saat sujud: dahi & hidung, kedua telapak tangan, kedua lutut, dan ujung jari kaki.",
+    views: "310 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rofif-04",
+    title: "Rofif Kids: Tata Cara Ruku yang Benar Sesuai Tuntunan Rasulullah",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "02:14",
+    youtubeId: "IWifkWDYBxU",
+    thumbnail: "https://i.ytimg.com/vi/IWifkWDYBxU/hqdefault.jpg",
+    description: "Posisi punggung lurus saat ruku, letak tangan mencengkeram lutut, serta bacaan ruku yang shahih dan mudah dihafal anak.",
+    views: "275 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rofif-05",
+    title: "Rofif Kids: Adab Makan Sesuai Tuntunan Rasulullah Shallallahu 'Alaihi Wasallam",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "03:15",
+    youtubeId: "dCXpvbfRp5I",
+    thumbnail: "https://i.ytimg.com/vi/dCXpvbfRp5I/hqdefault.jpg",
+    description: "Membaca bismillah, makan dengan tangan kanan, mengambil makanan terdekat, tidak mencela makanan, dan membaca doa setelah makan.",
+    views: "180 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rofif-06",
+    title: "Rofif Kids: Takut Hantu? Ini Cara Menghilangkannya dengan Dzikir & Doa",
+    speaker: "Tim Rofif Kids",
+    channel: "Rofif Kids",
+    kidsChannel: "Rofif Kids",
+    category: "Anak & Balita (Rofif Kids)",
+    duration: "02:50",
+    youtubeId: "xmNKiI7HEp4",
+    thumbnail: "https://i.ytimg.com/vi/xmNKiI7HEp4/hqdefault.jpg",
+    description: "Menanamkan tauhid dan rasa takut hanya kepada Allah, serta membiasakan anak membaca ayat kursi dan doa perlindungan dari gangguan setan.",
+    views: "340 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 4: RODJA CERIA
+  // Hafalan doa, surat pendek, bahasa Arab, dan akhlak harian anak
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-rodja-01",
+    title: "Rodja Ceria: Perisai Muslim Cilik - Doa Masuk Kamar Mandi & Adabnya",
+    speaker: "Tim Rodja Ceria",
+    channel: "Rodja Ceria",
+    kidsChannel: "Rodja Ceria",
+    category: "Anak & Balita (Rodja Ceria)",
+    duration: "00:47",
+    youtubeId: "QK1I9KjBBdA",
+    thumbnail: "https://i.ytimg.com/vi/QK1I9KjBBdA/hqdefault.jpg",
+    description: "Hafalan doa masuk kamar mandi bersuara merdu dan jernih, teks Arab latin dan arti, cocok untuk hafalan harian anak balita.",
+    views: "135 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rodja-02",
+    title: "Kisah Menawan Sang Teladan: Kisah Sahabat Usaid bin Hudhair Radhiyallahu 'Anhu",
+    speaker: "Kakak Pencerita Rodja Ceria",
+    channel: "Rodja Ceria",
+    kidsChannel: "Rodja Ceria",
+    category: "Anak & Balita (Rodja Ceria)",
+    duration: "08:11",
+    youtubeId: "X7OTAJKSTYs",
+    thumbnail: "https://i.ytimg.com/vi/X7OTAJKSTYs/hqdefault.jpg",
+    description: "Kisah inspiratif sahabat Nabi yang lantunan bacaan Al-Qur'annya didengarkan oleh para malaikat dari langit karena kekhusyukannya.",
+    views: "98 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rodja-03",
+    title: "Belajar Bahasa Arab Anak: Pelajaran Kalimat Tanya Sederhana",
+    speaker: "Ustadz Pengajar Rodja Ceria",
+    channel: "Rodja Ceria",
+    kidsChannel: "Rodja Ceria",
+    category: "Anak & Balita (Rodja Ceria)",
+    duration: "04:21",
+    youtubeId: "d_3CtTk9nsg",
+    thumbnail: "https://i.ytimg.com/vi/d_3CtTk9nsg/hqdefault.jpg",
+    description: "Mengenal kata tanya bahasa Arab (Maa, Man, Aina) dengan contoh benda di sekitar rumah dan sekolah, mudah dipahami anak-anak.",
+    views: "145 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rodja-04",
+    title: "Belajar Bahasa Arab Anak: Mengenal Isim Isyarah (Kata Tunjuk Haza & Hazihi)",
+    speaker: "Ustadz Pengajar Rodja Ceria",
+    channel: "Rodja Ceria",
+    kidsChannel: "Rodja Ceria",
+    category: "Anak & Balita (Rodja Ceria)",
+    duration: "05:44",
+    youtubeId: "TA3-yOzvxS8",
+    thumbnail: "https://i.ytimg.com/vi/TA3-yOzvxS8/hqdefault.jpg",
+    description: "Membedakan kata tunjuk benda muzakkar (haza) dan muannats (hazihi) menggunakan gambar interaktif dan latihan bersuara.",
+    views: "160 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-rodja-05",
+    title: "Bermain Sambil Belajar: Balapan Mobil Kertas & Kreativitas Anak Muslim",
+    speaker: "Tim Rodja Ceria",
+    channel: "Rodja Ceria",
+    kidsChannel: "Rodja Ceria",
+    category: "Anak & Balita (Rodja Ceria)",
+    duration: "10:18",
+    youtubeId: "cmlq36fyVck",
+    thumbnail: "https://i.ytimg.com/vi/cmlq36fyVck/hqdefault.jpg",
+    description: "Kegiatan kreatif membuat mainan sederhana sendiri, melatih ketangkasan motorik, serta menanamkan adab bermain tanpa pertengkaran.",
+    views: "85 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 5: MUSLIM ZONE
+  // Animasi dan video edukasi Islami pendekatan ringan untuk anak
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-mzone-01",
+    title: "Muslim Zone: Belajar Huruf Hijaiyah Lengkap untuk Balita & Anak Muslim",
+    speaker: "Tim Muslim Zone",
+    channel: "Muslim Zone",
+    kidsChannel: "Muslim Zone",
+    category: "Anak & Balita (Muslim Zone)",
+    duration: "02:34",
+    youtubeId: "sPUDFXWS9VU",
+    thumbnail: "https://i.ytimg.com/vi/sPUDFXWS9VU/hqdefault.jpg",
+    description: "Animasi warna-warni yang ceria mengenalkan alif sampai ya untuk anak balita, memudahkan pengenalan huruf Al-Qur'an sejak dini.",
+    views: "410 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-mzone-02",
+    title: "Muslim Zone: Belajar Angka 1 Sampai 10 Bahasa Arab & Indonesia",
+    speaker: "Tim Muslim Zone",
+    channel: "Muslim Zone",
+    kidsChannel: "Muslim Zone",
+    category: "Anak & Balita (Muslim Zone)",
+    duration: "04:27",
+    youtubeId: "LSSnIkd5F1I",
+    thumbnail: "https://i.ytimg.com/vi/LSSnIkd5F1I/hqdefault.jpg",
+    description: "Menghitung angka satu sampai sepuluh (Wahidun, Itsnani, Tsalatsatun...) dengan visual animasi menarik dan suara pengucapan merdu.",
+    views: "290 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-mzone-03",
+    title: "Muslim Zone: Belajar Mengenal Huruf Besar dan Huruf Kecil dengan Ceria",
+    speaker: "Tim Muslim Zone",
+    channel: "Muslim Zone",
+    kidsChannel: "Muslim Zone",
+    category: "Anak & Balita (Muslim Zone)",
+    duration: "05:27",
+    youtubeId: "h9R88cQWYBQ",
+    thumbnail: "https://i.ytimg.com/vi/h9R88cQWYBQ/hqdefault.jpg",
+    description: "Mengenal bentuk alfabet huruf kapital dan huruf kecil, melatih daya ingat visual dan keterampilan pra-membaca anak usia dini.",
+    views: "175 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-mzone-04",
+    title: "Muslim Zone: Belajar Menghitung Menggunakan 10 Jari Tangan",
+    speaker: "Tim Muslim Zone",
+    channel: "Muslim Zone",
+    kidsChannel: "Muslim Zone",
+    category: "Anak & Balita (Muslim Zone)",
+    duration: "03:59",
+    youtubeId: "SKR4xK5sU7I",
+    thumbnail: "https://i.ytimg.com/vi/SKR4xK5sU7I/hqdefault.jpg",
+    description: "Teknik berhitung mudah dengan jemari tangan, melatih konsentrasi dan kemampuan matematika dasar anak secara menyenangkan.",
+    views: "215 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-mzone-05",
+    title: "Muslim Zone: Mengenal Macam-Macam Buah Ciptaan Allah Ta'ala",
+    speaker: "Tim Muslim Zone",
+    channel: "Muslim Zone",
+    kidsChannel: "Muslim Zone",
+    category: "Anak & Balita (Muslim Zone)",
+    duration: "03:26",
+    youtubeId: "t4LmayYHpU4",
+    thumbnail: "https://i.ytimg.com/vi/t4LmayYHpU4/hqdefault.jpg",
+    description: "Mengenal nama buah-buahan, rasa, warna, serta rasa syukur kepada Allah yang telah menumbuhkan tanaman dan buah yang lezat.",
+    views: "195 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 6: ANNAWAWI TV
+  // Konten edukasi keagamaan, bahasa Arab anak, dan pembiasaan sunnah
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-nawawi-01",
+    title: "Annawawi TV: Belajar Bahasa Arab Anak - Tema 'Diri Sendiri & Anggota Tubuh'",
+    speaker: "Ustadzah Pembimbing INBS",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "06:15",
+    youtubeId: "NiiKLzOBnmc",
+    thumbnail: "https://i.ytimg.com/vi/NiiKLzOBnmc/hqdefault.jpg",
+    description: "Pelajaran bahasa Arab tematik mengenal anggota tubuh (kepala, mata, telinga, tangan, kaki) dengan metode menyanyi dan menunjuk diri sendiri.",
+    views: "165 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-nawawi-02",
+    title: "Annawawi TV: Belajar Bahasa Arab Anak - Tema 'Alam Semesta Ciptaan Allah'",
+    speaker: "Ustadzah Pembimbing INBS",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "07:30",
+    youtubeId: "bSbysGiSAC4",
+    thumbnail: "https://i.ytimg.com/vi/bSbysGiSAC4/hqdefault.jpg",
+    description: "Kosakata bahasa Arab seputar matahari, bulan, bintang, langit, dan bumi disertai tadabbur ciptaan Allah Ta'ala.",
+    views: "120 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-nawawi-03",
+    title: "Annawawi TV: Belajar Bahasa Arab Anak - Tema 'Keluargaku yang Tercinta'",
+    speaker: "Ustadzah Pembimbing INBS",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "08:10",
+    youtubeId: "10_m69o8oAE",
+    thumbnail: "https://i.ytimg.com/vi/10_m69o8oAE/hqdefault.jpg",
+    description: "Mengenal sebutan ayah (abun), ibu (ummun), kakek (jaddun), nenek (jaddatun), saudara laki-laki (akhun), dan saudara perempuan (ukhtun).",
+    views: "140 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-nawawi-04",
+    title: "Imam & Nawa: Lomba Kebaikan di Bulan Ramadhan | Animasi Anak Muslim",
+    speaker: "Karakter Imam & Nawa",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "06:30",
+    youtubeId: "oWoJKGMcvks",
+    thumbnail: "https://i.ytimg.com/vi/oWoJKGMcvks/hqdefault.jpg",
+    description: "Animasi edukatif kakak beradik Imam dan Nawa yang berlomba-lomba berbuat amal shalih, shalat tepat waktu, dan bersedekah di bulan suci.",
+    views: "245 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-nawawi-05",
+    title: "Cerita Imam: Imam Menjaga Amanah – Serial Anak Muslim Berakhlak Terpuji",
+    speaker: "Karakter Imam",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "07:15",
+    youtubeId: "gbpDKtrMMpg",
+    thumbnail: "https://i.ytimg.com/vi/gbpDKtrMMpg/hqdefault.jpg",
+    description: "Kisah animasi Imam yang diberi titipan barang oleh temannya dan menjaga amanah tersebut dengan sungguh-sungguh tanpa merusaknya.",
+    views: "195 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-nawawi-06",
+    title: "Anak Muslim Belajar Tauhid: Mengenal Allah Ar-Razzaaq (Maha Pemberi Rezeki)",
+    speaker: "Tim Edukasi Annawawi",
+    channel: "Annawawi TV",
+    kidsChannel: "Annawawi TV",
+    category: "Anak & Balita (Annawawi TV)",
+    duration: "09:40",
+    youtubeId: "n2WGZOV5ObA",
+    thumbnail: "https://i.ytimg.com/vi/n2WGZOV5ObA/hqdefault.jpg",
+    description: "Mengenalkan Asmaul Husna Ar-Razzaaq kepada anak dengan perumpamaan sederhana: Allah memberi makan burung, ikan, dan seluruh manusia.",
+    views: "180 rb",
+    date: "2024",
+    isKids: true
+  },
+
+  // --------------------------------------------------------------------------
+  // KANAL 7: KELUARGA HAMZI
+  // Keseharian dan cerita anak dengan nilai moral serta ajaran agama
+  // --------------------------------------------------------------------------
+  {
+    id: "kids-hamzi-01",
+    title: "Cerita Hamzi Eps 6: Belajar Menjaga Lisan & Berkata yang Baik",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "09:31",
+    youtubeId: "rXwP2mF2vXw",
+    thumbnail: "https://i.ytimg.com/vi/rXwP2mF2vXw/hqdefault.jpg",
+    description: "Animasi Hamzi mengajarkan anak-anak untuk selalu berkata jujur, tidak mengolok-olok teman, dan diam jika tidak bisa berkata baik.",
+    views: "380 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-hamzi-02",
+    title: "Cerita Hamzi Eps 5: Belajar Memilih Perbuatan yang Baik & Diridhai Allah",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "08:13",
+    youtubeId: "gOiQlEyaDV0",
+    thumbnail: "https://i.ytimg.com/vi/gOiQlEyaDV0/hqdefault.jpg",
+    description: "Kisah Hamzi saat dihadapkan pada pilihan bersikap jujur atau berbohong, serta keutamaan memilih kebenaran demi mencari ridha Allah.",
+    views: "310 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-hamzi-03",
+    title: "Cerita Hamzi Eps 4: Belajar Menepati Janji Sesuai Ajaran Agama",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "05:26",
+    youtubeId: "-4FndGNeobw",
+    thumbnail: "https://i.ytimg.com/vi/-4FndGNeobw/hqdefault.jpg",
+    description: "Pentingnya menepati janji yang telah diucapkan dan mengucapkan Insya Allah ketika berniat melakukan sesuatu di masa mendatang.",
+    views: "290 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-hamzi-04",
+    title: "Cerita Hamzi Eps 3: Hamzi Pulang Sekolah & Adab Masuk Rumah",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "06:13",
+    youtubeId: "IuUePASPUI8",
+    thumbnail: "https://i.ytimg.com/vi/IuUePASPUI8/hqdefault.jpg",
+    description: "Adab anak shalih pulang ke rumah: mengucapkan salam, mencium tangan orang tua, melepas sepatu rapi, dan meletakkan tas di tempatnya.",
+    views: "420 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-hamzi-05",
+    title: "Cerita Hamzi Eps 2: Shalat Berjamaah di Masjid Bersama Ayah",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "04:54",
+    youtubeId: "qxTk0v0TsxE",
+    thumbnail: "https://i.ytimg.com/vi/qxTk0v0TsxE/hqdefault.jpg",
+    description: "Hamzi antusias diajak ayah ke masjid untuk shalat berjamaah, belajar adab melangkah ke masjid, shalat tahiyyatul masjid, dan tenang di shaf.",
+    views: "510 rb",
+    date: "2024",
+    isKids: true
+  },
+  {
+    id: "kids-hamzi-06",
+    title: "Cerita Hamzi Eps 1: Bermain Sepeda, Menjaga Keselamatan & Tolong Menolong",
+    speaker: "Keluarga Hamzi",
+    channel: "Keluarga Hamzi",
+    kidsChannel: "Keluarga Hamzi",
+    category: "Anak & Balita (Keluarga Hamzi)",
+    duration: "05:52",
+    youtubeId: "rn457B_TW78",
+    thumbnail: "https://i.ytimg.com/vi/rn457B_TW78/hqdefault.jpg",
+    description: "Keseruan Hamzi bermain sepeda bersama teman-teman, selalu berhati-hati di jalan, dan sigap menolong sahabat yang terjatuh.",
+    views: "480 rb",
+    date: "2024",
+    isKids: true
   }
 ];
