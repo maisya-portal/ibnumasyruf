@@ -1191,8 +1191,38 @@
           <!-- Fullscreen Expand Button -->
           <button id="player-btn-maximize" class="btn-player-tool" title="Buka Layar Penuh">⛶</button>
 
+          <!-- Minimize / Sembunyikan Menjadi Icon Button -->
+          <button id="player-btn-minimize" class="btn-player-tool btn-player-minimize" title="Sembunyikan bilah pemutar menjadi icon mengambang">
+            <span class="minimize-icon-chevron">🔽</span>
+          </button>
+
         </div>
 
+      </div>
+    </div>
+
+    <!-- Floating Mini Player Bubble (Tampil Saat Bilah Pemutar di-Hide/Minimize) -->
+    <div id="player-mini-bubble" class="player-mini-bubble hidden" role="region" aria-label="Pemutar Audio Mengambang">
+      <div class="mini-bubble-inner" id="mini-bubble-expand-zone" title="Klik untuk membuka kembali bilah pemutar lengkap">
+        <div class="mini-bubble-icon-wrap">
+          <span id="mini-bubble-thumb-icon" class="mini-bubble-icon">📻</span>
+          <span id="mini-bubble-pulse-ring" class="mini-bubble-pulse"></span>
+        </div>
+        <div class="mini-bubble-meta">
+          <div class="mini-bubble-badge-row">
+            <span id="mini-bubble-badge" class="mini-bubble-badge">LIVE</span>
+            <span class="mini-bubble-hint">Klik buka</span>
+          </div>
+          <span id="mini-bubble-title" class="mini-bubble-title">Radio Rodja 756 AM</span>
+        </div>
+      </div>
+      <div class="mini-bubble-actions">
+        <button id="mini-bubble-play-btn" class="mini-bubble-ctrl-btn" title="Putar / Jeda">
+          <span id="mini-bubble-play-icon">▶</span>
+        </button>
+        <button id="mini-bubble-maximize-btn" class="mini-bubble-ctrl-btn maximize" title="Buka Bilah Pemutar Lengkap">
+          <span>🔼</span>
+        </button>
       </div>
     </div>
 

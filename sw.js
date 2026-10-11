@@ -1,9 +1,9 @@
 // ==========================================================================
 // IBNU MASYRUF APP - SERVICE WORKER (PWA)
-// Cache Version: v1.5.4
+// Cache Version: v1.5.5
 // ==========================================================================
 
-const CACHE_NAME = 'ibnumasyruf-cache-v1.5.4';
+const CACHE_NAME = 'ibnumasyruf-cache-v1.5.5';
 
 // Core Application Shell Assets
 const STATIC_ASSETS = [
