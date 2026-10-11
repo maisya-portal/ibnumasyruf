@@ -534,6 +534,40 @@
           </div>
         </div>
 
+        <!-- Dedicated In-Tab Video Theater Player -->
+        <div id="video-theater-container" class="video-theater-wrapper hidden">
+          <div class="theater-player-frame video-player-frame-custom">
+            <div id="video-player-wrapper" class="video-responsive-wrap video-theater-glass">
+              <iframe id="video-iframe-player"
+                      title="Pemutar Video Kajian Sunnah"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen>
+              </iframe>
+            </div>
+            
+            <div class="video-theater-meta-bar card-glass">
+              <div class="video-theater-meta-main">
+                <div class="theater-channel-badge mb-2">
+                  <span id="current-video-category" class="card-badge emerald">Aqidah & Tauhid</span>
+                  <span id="current-video-duration" class="text-xs text-muted">⏱️ 01:24:18</span>
+                  <span id="current-video-views" class="text-xs text-muted">👁️ 245 rb tayangan</span>
+                </div>
+                <h3 id="current-video-title" class="video-theater-title">Judul Video Kajian</h3>
+                <p id="current-video-speaker" class="video-theater-speaker">Ustadz • Kanal Dakwah</p>
+                <p id="current-video-desc" class="video-theater-desc">Deskripsi pembahasan materi video...</p>
+              </div>
+              <div class="video-theater-meta-actions">
+                <button id="btn-close-video-theater" class="btn-secondary" title="Tutup / Sembunyikan Pemutar">
+                  <span>✕</span> Tutup Pemutar
+                </button>
+                <button id="btn-share-video-theater" class="btn-primary-tarjim" title="Bagikan Video ke WhatsApp">
+                  <span>💬</span> Bagikan
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Category Pills -->
         <div class="filter-pills" id="video-filter-pills">
           <button class="pill-btn active" data-vfilter="all">Semua Video</button>

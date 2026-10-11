@@ -932,25 +932,81 @@ function renderVideosView() {
       const card = e.currentTarget.closest('.item-card');
       const v = kajianVideoList.find(x => x.id === card.dataset.id);
       if (v) {
-        // Switch to TV tab and load video
-        switchTab('tab-tv');
-        const iframe = document.getElementById('tv-iframe-player');
-        iframe.src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1&enablejsapi=1`;
-        document.getElementById('current-tv-title').textContent = v.title;
-        document.getElementById('current-tv-origin').textContent = `${v.speaker} • ${v.channel}`;
-        document.getElementById('current-tv-desc').textContent = v.description;
-        saveToHistory({
-          id: v.id,
-          title: v.title,
-          speaker: v.speaker,
-          type: 'video',
-          url: `https://www.youtube.com/watch?v=${v.youtubeId}`,
-          thumbnail: v.thumbnail
-        });
-        showToast(`Memutar video: ${v.title}`);
+        playKajianVideo(v);
       }
     });
   });
+}
+
+function playKajianVideo(v) {
+  if (!v) return;
+
+  // Hentikan audio player jika sedang memutar siaran lain
+  if (state.isPlaying) {
+    audioElement.pause();
+    state.isPlaying = false;
+    updatePlayerBarUI();
+  }
+
+  // Hentikan video TV Sunnah jika sedang aktif
+  const tvVideo = document.getElementById('tv-video-player');
+  if (tvVideo && !tvVideo.paused) {
+    tvVideo.pause();
+  }
+
+  const theaterWrapper = document.getElementById('video-theater-container');
+  const iframe = document.getElementById('video-iframe-player');
+  const titleEl = document.getElementById('current-video-title');
+  const speakerEl = document.getElementById('current-video-speaker');
+  const descEl = document.getElementById('current-video-desc');
+  const categoryEl = document.getElementById('current-video-category');
+  const durationEl = document.getElementById('current-video-duration');
+  const viewsEl = document.getElementById('current-video-views');
+  const btnShare = document.getElementById('btn-share-video-theater');
+
+  if (theaterWrapper) {
+    theaterWrapper.classList.remove('hidden');
+    theaterWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  if (iframe) {
+    iframe.src = `https://www.youtube-nocookie.com/embed/${v.youtubeId}?autoplay=1&rel=0&enablejsapi=1`;
+  }
+
+  if (titleEl) titleEl.textContent = v.title;
+  if (speakerEl) speakerEl.textContent = `${v.speaker} • ${v.channel}`;
+  if (descEl) descEl.textContent = v.description;
+  if (categoryEl) {
+    categoryEl.textContent = v.category;
+    categoryEl.className = `card-badge ${v.isKids ? 'gold' : 'emerald'}`;
+  }
+  if (durationEl) durationEl.textContent = `⏱️ ${v.duration}`;
+  if (viewsEl) viewsEl.textContent = `👁️ ${v.views || 'Tersedia'}`;
+
+  if (btnShare) {
+    btnShare.onclick = () => {
+      const shareText = `*Kajian Sunnah - Ibnu Masyruf App:*\n\n*${v.title}*\n${v.speaker} • ${v.channel}\nhttps://www.youtube.com/watch?v=${v.youtubeId}\n\n_Diputar via Ibnu Masyruf App_`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+    };
+  }
+
+  saveToHistory({
+    id: v.id,
+    title: v.title,
+    speaker: v.speaker,
+    type: 'video',
+    url: `https://www.youtube.com/watch?v=${v.youtubeId}`,
+    thumbnail: v.thumbnail
+  });
+
+  showToast(`Memutar video: ${v.title}`);
+}
+
+function closeVideoTheater() {
+  const theaterWrapper = document.getElementById('video-theater-container');
+  const iframe = document.getElementById('video-iframe-player');
+  if (iframe) iframe.src = '';
+  if (theaterWrapper) theaterWrapper.classList.add('hidden');
 }
 
 // 6. Render LocalStorage Engine Views (History, Favorites, Notes)
@@ -1128,7 +1184,8 @@ function resumeItem(item) {
     switchTvChannel(item.id);
   } else if (item.type === 'video') {
     switchTab('tab-kajian-video');
-    showToast(`Memilih video: ${item.title}`);
+    const v = kajianVideoList.find(x => x.id === item.id) || item;
+    playKajianVideo(v);
   }
 }
 
@@ -1394,6 +1451,16 @@ function switchTab(tabId) {
     }
   }
 
+  // Jika berpindah dari tab Kajian Video ke tab lain, jeda video YouTube
+  if (tabId !== 'tab-kajian-video') {
+    const vIframe = document.getElementById('video-iframe-player');
+    if (vIframe && vIframe.contentWindow && vIframe.src) {
+      try {
+        vIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      } catch (err) {}
+    }
+  }
+
   // Update nav buttons
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
     if (btn.dataset.tab === tabId) {
@@ -1549,6 +1616,12 @@ function initApp() {
   const btnHomeLaunchTarjim = document.getElementById('btn-home-launch-tarjim');
   if (btnHomeLaunchTarjim) {
     btnHomeLaunchTarjim.addEventListener('click', () => switchTab('tab-smart-tarjim'));
+  }
+
+  // Tombol tutup pemutar video kajian
+  const btnCloseVideo = document.getElementById('btn-close-video-theater');
+  if (btnCloseVideo) {
+    btnCloseVideo.addEventListener('click', closeVideoTheater);
   }
 
   // Initialize Smart Tarjim AI Module
