@@ -173,6 +173,10 @@
             <span class="tab-icon">📿</span>
             <span class="tab-label">Dzikir & Mutiara</span>
           </button>
+          <button class="nav-tab-btn nav-tab-highlight" data-tab="tab-smart-tarjim">
+            <span class="tab-icon">✨</span>
+            <span class="tab-label">Smart Tarjim</span>
+          </button>
         </div>
       </nav>
     </header>
@@ -206,6 +210,9 @@
               </button>
               <button class="btn-secondary" id="btn-hero-browse-audio">
                 <span>🎙️</span> Jelajahi Kajian.net
+              </button>
+              <button class="btn-primary-tarjim" id="btn-hero-open-tarjim">
+                <span>✨</span> Smart Tarjim AI
               </button>
             </div>
           </div>
@@ -283,6 +290,33 @@
           </div>
           <div id="home-audio-grid" class="cards-grid">
             <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Showcase Banner: Smart Tarjim AI -->
+        <div class="tarjim-showcase-banner card-glass">
+          <div class="showcase-content">
+            <div class="showcase-badge">
+              <span class="pulse-dot-gold"></span> FITUR BARU • KECERDASAN BUATAN
+            </div>
+            <h2 class="showcase-title">Smart Tarjim — Penerjemah Arab Cerdas & Tanya Salluni</h2>
+            <p class="showcase-desc">
+              Terjemahan presisi teks Arab-Indonesia dilengkapi <strong>harakat otomatis</strong>, analisis <strong>Nahwu & Shorof</strong>, pemindaian dokumen kitab/kertas (OCR), dan asisten tanya jawab interaktif <strong>Salluni (اسألني)</strong>.
+            </p>
+            <div class="showcase-pills">
+              <span class="showcase-pill">📖 Nahwu & Shorof</span>
+              <span class="showcase-pill">✨ Harokat Otomatis</span>
+              <span class="showcase-pill">📷 Scan Foto / PDF</span>
+              <span class="showcase-pill">💬 Tanya Salluni</span>
+            </div>
+            <button class="btn-primary-tarjim" id="btn-home-launch-tarjim">
+              <span>🚀</span> Buka Smart Tarjim Sekarang
+            </button>
+          </div>
+          <div class="showcase-visual">
+            <div class="showcase-arabic-art">
+              <span>تَرْجِمْ بِذَكَاءٍ</span>
+            </div>
           </div>
         </div>
 
@@ -633,6 +667,329 @@
             </div>
           </div>
           <div id="mutiara-salaf-list" class="mutiara-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 8: SMART TARJIM - AI ARABIC TRANSLATOR & SALLUNI
+      ======================================================== -->
+      <section id="tab-smart-tarjim" class="tab-section">
+        
+        <!-- Smart Tarjim Header Hero -->
+        <div class="tarjim-hero-card card-glass">
+          <div class="tarjim-hero-top">
+            <div class="tarjim-hero-icon-ring">
+              <span class="tarjim-hero-icon">✨</span>
+            </div>
+            <div>
+              <div class="tarjim-hero-badge">
+                <span class="pulse-dot-emerald"></span> POWERED BY TARJIM-AI ENGINE
+              </div>
+              <h2 class="tarjim-hero-title">Smart Tarjim — Asisten Penerjemah & Studi Bahasa Arab</h2>
+              <p class="tarjim-hero-desc">
+                Penerjemah digital presisi dilengkapi penambahan harakat/tashkil otomatis, analisis Nahwu & Shorof, ekstraksi teks dokumen/kitab, dan konsultasi bahasa Arab bersama <strong>Salluni (اسألني)</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Smart Tarjim Sub-Navigation Tabs -->
+          <div class="tarjim-subnav-bar">
+            <button class="tarjim-subtab-btn active" data-subtab="subtab-translate">
+              <span class="subtab-icon">🌐</span>
+              <span class="subtab-text">Terjemah & Harokat</span>
+            </button>
+            <button class="tarjim-subtab-btn" data-subtab="subtab-salluni">
+              <span class="subtab-icon">💬</span>
+              <span class="subtab-text">Tanya Salluni (اسألني)</span>
+            </button>
+            <button class="tarjim-subtab-btn" data-subtab="subtab-ocr">
+              <span class="subtab-icon">📷</span>
+              <span class="subtab-text">Scan & OCR Dokumen</span>
+            </button>
+            <button class="tarjim-subtab-btn" data-subtab="subtab-video">
+              <span class="subtab-icon">🎬</span>
+              <span class="subtab-text">Terjemah Video Kajian</span>
+            </button>
+            <button class="tarjim-subtab-btn" data-subtab="subtab-history">
+              <span class="subtab-icon">📜</span>
+              <span class="subtab-text">Riwayat Terjemahan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             SUBTAB 1: TERJEMAH & HAROKAT
+        ============================================== -->
+        <div id="subtab-translate" class="tarjim-subtab-panel active">
+          
+          <!-- Language Selector Bar -->
+          <div class="tarjim-lang-bar card-glass">
+            <div class="lang-selector-group">
+              <label for="tarjim-select-source" class="lang-label">Dari:</label>
+              <select id="tarjim-select-source" class="tarjim-select">
+                <option value="auto" selected>🌐 Otomatis Deteksi</option>
+                <option value="ar">🇸🇦 Bahasa Arab (العربية)</option>
+                <option value="id">🇮🇩 Bahasa Indonesia</option>
+                <option value="en">🇬🇧 Bahasa Inggris</option>
+              </select>
+            </div>
+
+            <button id="btn-tarjim-swap" class="btn-tarjim-swap" title="Tukar Arah Bahasa">
+              <span>⇄</span>
+            </button>
+
+            <div class="lang-selector-group">
+              <label for="tarjim-select-target" class="lang-label">Ke:</label>
+              <select id="tarjim-select-target" class="tarjim-select">
+                <option value="id" selected>🇮🇩 Bahasa Indonesia</option>
+                <option value="ar">🇸🇦 Bahasa Arab (العربية)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Explanation Topics Filter / Badges -->
+          <div class="tarjim-topics-box">
+            <span class="topics-title">Sertakan Analisis Tambahan:</span>
+            <div class="topics-chips-list">
+              <button class="tarjim-topic-chip active" data-topic="nahwushorof">
+                <span>📖</span> Nahwu & Shorof (I'rab)
+              </button>
+              <button class="tarjim-topic-chip" data-topic="bahasaarab">
+                <span>🔤</span> Makna Bahasa Arab
+              </button>
+              <button class="tarjim-topic-chip" data-topic="bekal">
+                <span>⚖️</span> Faidah Syar'i & Akhirat
+              </button>
+              <button class="tarjim-topic-chip" data-topic="kisah">
+                <span>🌟</span> Kisah Salafush Shalih
+              </button>
+              <button class="tarjim-topic-chip" data-topic="pendidikan">
+                <span>📚</span> Kaidah Ilmu & Pembelajaran
+              </button>
+            </div>
+          </div>
+
+          <!-- Translation Work Area (Grid Input & Output) -->
+          <div class="tarjim-workspace-grid">
+            
+            <!-- Source Text Box -->
+            <div class="tarjim-card card-glass">
+              <div class="tarjim-card-header">
+                <div class="card-header-left">
+                  <span class="card-header-title">✍️ Teks Sumber</span>
+                </div>
+                <div class="card-header-actions">
+                  <button id="btn-tarjim-paste" class="btn-tarjim-tool" title="Tempel dari Clipboard">
+                    <span>📋 Tempel</span>
+                  </button>
+                  <button id="btn-tarjim-clear" class="btn-tarjim-tool" title="Kosongkan Teks">
+                    <span>✕ Bersihkan</span>
+                  </button>
+                </div>
+              </div>
+              <div class="tarjim-card-body">
+                <textarea id="tarjim-input-text" class="tarjim-textarea" placeholder="Tulis atau tempel teks Arab gundul, kalimat doa, hadits, atau bahasa Indonesia di sini...&#10;&#10;Contoh: طلب العلم فريضة على كل مسلم" rows="8"></textarea>
+              </div>
+              <div class="tarjim-card-footer">
+                <span class="shortcut-hint">Tekan <strong>Ctrl + Enter</strong> untuk menerjemahkan cepat</span>
+                <button id="btn-tarjim-translate" class="btn-primary-tarjim">
+                  <span>✨</span> Terjemahkan & Harokat
+                </button>
+              </div>
+            </div>
+
+            <!-- Translation Result Box -->
+            <div id="tarjim-result-card" class="tarjim-card card-glass hidden">
+              <div class="tarjim-card-header">
+                <div class="card-header-left">
+                  <span class="card-header-title">📗 Hasil Smart Tarjim</span>
+                  <span id="tarjim-stream-indicator" class="tarjim-live-badge hidden">
+                    <span class="pulse-dot-emerald"></span> Menghasilkan...
+                  </span>
+                </div>
+                <div class="card-header-actions">
+                  <button id="btn-tarjim-audio-result" class="btn-tarjim-tool" title="Dengarkan Pelafalan Suara">
+                    <span>🔊 Dengarkan</span>
+                  </button>
+                  <button id="btn-tarjim-copy-result" class="btn-tarjim-tool" title="Salin Terjemahan">
+                    <span>📋 Salin</span>
+                  </button>
+                  <button id="btn-tarjim-share-result" class="btn-tarjim-tool" title="Bagikan ke WhatsApp">
+                    <span>💬 WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+              <div class="tarjim-card-body">
+                <div id="tarjim-result-body" class="tarjim-result-content custom-scrollbar">
+                  <!-- Rendered Markdown from API -->
+                </div>
+              </div>
+              <div class="tarjim-card-footer">
+                <span class="card-footer-info">Hasil otomatis disimpan ke riwayat perangkat Anda</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ==============================================
+             SUBTAB 2: TANYA SALLUNI (اسألني)
+        ============================================== -->
+        <div id="subtab-salluni" class="tarjim-subtab-panel">
+          <div class="salluni-container card-glass">
+            
+            <div class="salluni-header">
+              <div class="salluni-brand">
+                <div class="salluni-avatar-main">✨</div>
+                <div>
+                  <h3 class="salluni-name">Salluni (اسألني) — Teman Belajar Bahasa Arab</h3>
+                  <p class="salluni-tagline">Tanyakan kaidah Nahwu, Shorof, I'rab kalimat, perbedaan makna kata, atau istilah fiqih</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Suggestion Chips -->
+            <div class="salluni-suggestions-bar">
+              <span class="suggest-label">Coba Tanyakan:</span>
+              <div class="suggest-chips-scroll">
+                <button class="salluni-suggest-chip" data-prompt="Apa itu I'rab dan apa saja 4 macam I'rab dalam Nahwu?">
+                  📖 Apa itu I'rab & macamnya?
+                </button>
+                <button class="salluni-suggest-chip" data-prompt="Jelaskan perbedaan antara Jumlah Ismiyyah dan Jumlah Fi'liyyah dengan contoh!">
+                  ⚖️ Jumlah Ismiyyah vs Fi'liyyah
+                </button>
+                <button class="salluni-suggest-chip" data-prompt="Bagaimana cara menentukan Fa'il dan Maf'ul Bih dalam kalimat?">
+                  🔍 Menentukan Fa'il & Maf'ul
+                </button>
+                <button class="salluni-suggest-chip" data-prompt="Jelaskan wazan fi'il tsulatsi mujarrad dan contoh tashrifnya!">
+                  📐 Wazan Tsulatsi Mujarrad
+                </button>
+              </div>
+            </div>
+
+            <!-- Chat Messages Scroll Area -->
+            <div id="salluni-messages-list" class="salluni-messages-area custom-scrollbar">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Chat Input Form -->
+            <form id="salluni-form" class="salluni-input-bar">
+              <input type="text" id="salluni-input" class="salluni-input-field" placeholder="Ketik pertanyaan seputar kaidah bahasa Arab, i'rab, atau hadits di sini..." autocomplete="off">
+              <button type="submit" id="btn-salluni-send" class="btn-salluni-send">
+                <span>Kirim</span>
+                <span>➤</span>
+              </button>
+            </form>
+
+          </div>
+        </div>
+
+        <!-- ==============================================
+             SUBTAB 3: SCAN & OCR DOKUMEN
+        ============================================== -->
+        <div id="subtab-ocr" class="tarjim-subtab-panel">
+          <div class="ocr-wrapper-grid">
+            
+            <div class="ocr-upload-card card-glass">
+              <div class="section-header-compact">
+                <h3 class="section-title-sm">📷 Pindai Foto Kitab / Dokumen PDF</h3>
+                <p class="section-desc-sm">Ekstrak teks Arab/Indonesia langsung dari foto tulisan, tangkapan layar, atau berkas PDF</p>
+              </div>
+
+              <!-- Drag and Drop Box -->
+              <div id="ocr-drop-zone" class="ocr-drop-box">
+                <div class="ocr-drop-icon">📄</div>
+                <h4 class="ocr-drop-title">Tarik & Letakkan Gambar atau PDF di Sini</h4>
+                <p class="ocr-drop-hint">Mendukung file JPG, PNG, WEBP, dan PDF (Maks. 10MB)</p>
+                <p class="ocr-clipboard-hint">💡 Anda juga bisa langsung <strong>Paste (Ctrl+V)</strong> gambar dari clipboard di layar ini!</p>
+                
+                <input type="file" id="ocr-file-input" accept="image/*,application/pdf" class="hidden">
+                <button id="btn-ocr-pick-file" class="btn-primary-tarjim mt-3">
+                  <span>📁</span> Pilih File dari Perangkat / Kamera
+                </button>
+              </div>
+
+              <div class="ocr-preview-wrap">
+                <img id="ocr-image-preview" alt="Preview Gambar" class="ocr-img-preview hidden">
+                <div id="ocr-status-text" class="ocr-status-badge">Siap memindai</div>
+              </div>
+            </div>
+
+            <!-- Extracted Text Card -->
+            <div id="ocr-result-card" class="ocr-result-card card-glass hidden">
+              <div class="tarjim-card-header">
+                <span class="card-header-title">📋 Teks Hasil Ekstraksi & Terjemah</span>
+              </div>
+              <div class="tarjim-card-body">
+                <div id="ocr-result-body" class="ocr-result-content custom-scrollbar"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==============================================
+             SUBTAB 4: TERJEMAH VIDEO KAJIAN
+        ============================================== -->
+        <div id="subtab-video" class="tarjim-subtab-panel">
+          <div class="video-tarjim-card card-glass">
+            <div class="section-header-compact">
+              <h3 class="section-title-sm">🎬 Terjemahkan Video Ceramah & Kajian Arab</h3>
+              <p class="section-desc-sm">Masukkan tautan video YouTube dan teks transkrip kajian untuk diterjemahkan dan diringkas intisarinya</p>
+            </div>
+
+            <div class="video-tarjim-inputs">
+              <div class="input-row mb-3">
+                <label for="video-tarjim-url" class="field-label">Tautan Video YouTube (Opsional):</label>
+                <input type="url" id="video-tarjim-url" class="filter-input" placeholder="https://www.youtube.com/watch?v=...">
+              </div>
+
+              <div class="input-row mb-3">
+                <label for="video-tarjim-transcript" class="field-label">Teks Transkrip / Rekaman Pembicaraan:</label>
+                <textarea id="video-tarjim-transcript" class="tarjim-textarea" rows="6" placeholder="Tempel transkrip ceramah bahasa Arab di sini..."></textarea>
+              </div>
+
+              <button id="btn-video-translate" class="btn-primary-tarjim">
+                <span>🎬</span> Terjemahkan Kajian Video
+              </button>
+            </div>
+
+            <div id="video-result-card" class="video-result-box card-glass hidden mt-4">
+              <div class="tarjim-card-header">
+                <span class="card-header-title">📖 Hasil Terjemah & Ringkasan Kajian</span>
+              </div>
+              <div class="tarjim-card-body">
+                <div id="video-result-body" class="tarjim-result-content custom-scrollbar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             SUBTAB 5: RIWAYAT TERJEMAHAN
+        ============================================== -->
+        <div id="subtab-history" class="tarjim-subtab-panel">
+          <div class="tarjim-history-header">
+            <div>
+              <h3 class="history-title">📜 Riwayat Terjemahan Tersimpan</h3>
+              <p class="history-desc">Semua teks yang telah Anda terjemahkan disimpan aman di memori lokal perangkat</p>
+            </div>
+            <button id="btn-tarjim-clear-history" class="btn-danger-outline">
+              <span>🗑️</span> Bersihkan Riwayat
+            </button>
+          </div>
+
+          <div id="tarjim-history-empty" class="empty-state-card card-glass hidden">
+            <span class="empty-icon">📭</span>
+            <h4>Belum ada riwayat terjemahan</h4>
+            <p>Terjemahan yang Anda lakukan akan otomatis tersimpan di sini.</p>
+          </div>
+
+          <div id="tarjim-history-list" class="tarjim-history-cards-grid">
             <!-- Populated via JS -->
           </div>
         </div>

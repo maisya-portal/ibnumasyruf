@@ -7,6 +7,7 @@ import { tvChannels } from './data/tvChannels.js';
 import { kajianAudioList } from './data/kajianAudio.js';
 import { kajianVideoList } from './data/kajianVideo.js';
 import { mutiaraSalaf, dzikirPagiPetang } from './data/dzikir.js';
+import { initSmartTarjim } from './js/smartTarjim.js';
 
 // --- LOCALSTORAGE KEYS ---
 const STORAGE_KEYS = {
@@ -1347,6 +1348,7 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 400);
   }, 3200);
 }
+window.showToast = showToast;
 
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
@@ -1540,6 +1542,17 @@ function initApp() {
   document.getElementById('btn-hero-browse-audio').addEventListener('click', () => {
     switchTab('tab-kajian-audio');
   });
+  const btnHeroOpenTarjim = document.getElementById('btn-hero-open-tarjim');
+  if (btnHeroOpenTarjim) {
+    btnHeroOpenTarjim.addEventListener('click', () => switchTab('tab-smart-tarjim'));
+  }
+  const btnHomeLaunchTarjim = document.getElementById('btn-home-launch-tarjim');
+  if (btnHomeLaunchTarjim) {
+    btnHomeLaunchTarjim.addEventListener('click', () => switchTab('tab-smart-tarjim'));
+  }
+
+  // Initialize Smart Tarjim AI Module
+  initSmartTarjim();
 
   // Header quick buttons
   document.getElementById('btn-header-history').addEventListener('click', () => {

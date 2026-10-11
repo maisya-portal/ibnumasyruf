@@ -1,9 +1,9 @@
 // ==========================================================================
 // IBNU MASYRUF APP - SERVICE WORKER (PWA)
-// Cache Version: v1.4.1
+// Cache Version: v1.5.0
 // ==========================================================================
 
-const CACHE_NAME = 'ibnumasyruf-cache-v1.4.1';
+const CACHE_NAME = 'ibnumasyruf-cache-v1.5.0';
 
 // Core Application Shell Assets
 const STATIC_ASSETS = [
@@ -11,6 +11,7 @@ const STATIC_ASSETS = [
   './index.html',
   './index.css',
   './app.js',
+  './js/smartTarjim.js',
   './manifest.json',
   './favicon.ico',
   './icons/favicon.png',
