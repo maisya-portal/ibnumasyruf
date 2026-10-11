@@ -1074,9 +1074,23 @@
           <!-- Time & Visualizer Row -->
           <div class="player-visual-row">
             <span id="player-time-current" class="time-label">00:00</span>
-            <div class="canvas-visualizer-wrap">
+            
+            <div class="canvas-visualizer-wrap" id="player-visualizer-wrap">
               <canvas id="audio-visualizer-canvas" width="160" height="24"></canvas>
             </div>
+
+            <!-- Connecting Animation Indicator -->
+            <div id="player-connecting-indicator" class="player-connecting-indicator hidden">
+              <div class="connecting-radar-wrap">
+                <span class="connecting-radar-ping"></span>
+                <span class="connecting-radar-core">📡</span>
+              </div>
+              <span class="connecting-label">Menyambungkan</span>
+              <span class="connecting-wave-bars">
+                <span></span><span></span><span></span><span></span>
+              </span>
+            </div>
+
             <span id="player-time-total" class="time-label">LIVE</span>
           </div>
 
@@ -1134,6 +1148,17 @@
             <div class="modal-cover-art">
               <span id="modal-cover-icon">📻</span>
               <canvas id="modal-visualizer-canvas" width="320" height="60"></canvas>
+              
+              <div id="modal-connecting-indicator" class="modal-connecting-indicator hidden">
+                <div class="modal-radar-wrap">
+                  <span class="connecting-radar-ping"></span>
+                  <span class="connecting-radar-core">📡</span>
+                </div>
+                <div class="modal-connecting-text">Menyambungkan siaran...</div>
+                <div class="connecting-wave-bars mt-2">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
             </div>
             <div class="modal-track-meta">
               <h2 id="modal-track-title">Radio Rodja 756 AM</h2>

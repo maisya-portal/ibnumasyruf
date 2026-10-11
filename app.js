@@ -26,6 +26,7 @@ const state = {
   // Media Player State
   currentTrack: null, // { id, title, speaker, type: 'radio'|'audio'|'tv'|'video', url, backupUrl, logo, downloadUrl, duration }
   isPlaying: false,
+  isConnecting: false,
   playbackSpeed: 1.0,
   volume: 0.9,
   isMuted: false,
@@ -214,11 +215,43 @@ function deleteNote(id) {
 
 const nativeAudio = document.getElementById('native-audio');
 
+function setAudioConnectingState(isConnecting) {
+  state.isConnecting = isConnecting;
+  const ind = document.getElementById('player-connecting-indicator');
+  const visWrap = document.getElementById('player-visualizer-wrap');
+  const modalInd = document.getElementById('modal-connecting-indicator');
+  const modalCanvas = document.getElementById('modal-visualizer-canvas');
+  const playBtn = document.getElementById('player-btn-play');
+
+  if (isConnecting) {
+    if (ind) ind.classList.remove('hidden');
+    if (visWrap) visWrap.classList.add('hidden');
+    if (modalInd) modalInd.classList.remove('hidden');
+    if (modalCanvas) modalCanvas.classList.add('hidden');
+    if (playBtn) {
+      playBtn.classList.add('is-connecting');
+      playBtn.setAttribute('title', 'Menyambungkan siaran...');
+    }
+  } else {
+    if (ind) ind.classList.add('hidden');
+    if (visWrap) visWrap.classList.remove('hidden');
+    if (modalInd) modalInd.classList.add('hidden');
+    if (modalCanvas) modalCanvas.classList.remove('hidden');
+    if (playBtn) {
+      playBtn.classList.remove('is-connecting');
+      playBtn.setAttribute('title', state.isPlaying ? 'Jeda' : 'Putar');
+    }
+  }
+}
+
 function playAudioTrack(trackData) {
   if (!trackData) return;
   
   state.currentTrack = trackData;
   saveToHistory(trackData);
+
+  // Tampilkan indikator animasi menyambungkan
+  setAudioConnectingState(true);
 
   // Set audio source
   const sourceUrl = trackData.streamUrl || trackData.audioUrl || trackData.url;
@@ -229,21 +262,24 @@ function playAudioTrack(trackData) {
   const playPromise = nativeAudio.play();
   if (playPromise !== undefined) {
     playPromise.then(() => {
-      state.isPlaying = true;
+      // Audio mulai terhubung
       updatePlayerUI();
-      startAudioVisualizer();
-      showToast(`Memutar: ${trackData.title || trackData.name}`);
+      showToast(`Menyambungkan: ${trackData.title || trackData.name}`);
     }).catch(err => {
       console.warn('Autoplay prevented or stream error:', err);
       // Try backup stream if available
       if (trackData.backupUrl && trackData.backupUrl !== sourceUrl) {
         console.log('Trying backup stream URL:', trackData.backupUrl);
+        setAudioConnectingState(true);
         nativeAudio.src = trackData.backupUrl;
         nativeAudio.play().then(() => {
-          state.isPlaying = true;
           updatePlayerUI();
-          startAudioVisualizer();
-        }).catch(e => console.error('Backup stream failed:', e));
+        }).catch(e => {
+          setAudioConnectingState(false);
+          console.error('Backup stream failed:', e);
+        });
+      } else {
+        setAudioConnectingState(false);
       }
     });
   }
@@ -355,36 +391,74 @@ function updatePlayerUI() {
 
 // Scrubber Timeline & Audio Events
 nativeAudio.addEventListener('timeupdate', () => {
-  if (isNaN(nativeAudio.duration)) return;
-  
   const current = nativeAudio.currentTime;
   const duration = nativeAudio.duration;
-  const pct = (current / duration) * 100;
   
-  document.getElementById('player-progress-fill').style.width = `${pct}%`;
-  document.getElementById('player-progress-thumb').style.left = `${pct}%`;
+  if (state.currentTrack && (state.currentTrack.type === 'radio' || state.currentTrack.frequency)) {
+    document.getElementById('player-time-total').textContent = 'LIVE';
+  } else if (duration && isFinite(duration) && !isNaN(duration)) {
+    document.getElementById('player-time-total').textContent = formatSeconds(duration);
+    const pct = (current / duration) * 100;
+    document.getElementById('player-progress-fill').style.width = `${pct}%`;
+    document.getElementById('player-progress-thumb').style.left = `${pct}%`;
+  } else {
+    document.getElementById('player-time-total').textContent = 'LIVE';
+  }
   
   document.getElementById('player-time-current').textContent = formatSeconds(current);
-  if (duration && !isNaN(duration)) {
-    document.getElementById('player-time-total').textContent = formatSeconds(duration);
-  }
 });
 
 nativeAudio.addEventListener('progress', () => {
-  if (nativeAudio.buffered.length > 0 && nativeAudio.duration) {
+  if (nativeAudio.buffered.length > 0 && nativeAudio.duration && isFinite(nativeAudio.duration)) {
     const bufferedEnd = nativeAudio.buffered.end(nativeAudio.buffered.length - 1);
     const pct = (bufferedEnd / nativeAudio.duration) * 100;
     document.getElementById('player-buffer-bar').style.width = `${pct}%`;
   }
 });
 
+// Audio lifecycle events for Connecting Animation
+nativeAudio.addEventListener('loadstart', () => {
+  setAudioConnectingState(true);
+});
+
+nativeAudio.addEventListener('waiting', () => {
+  setAudioConnectingState(true);
+});
+
+nativeAudio.addEventListener('seeking', () => {
+  setAudioConnectingState(true);
+});
+
+nativeAudio.addEventListener('canplay', () => {
+  setAudioConnectingState(false);
+});
+
+nativeAudio.addEventListener('playing', () => {
+  setAudioConnectingState(false);
+  state.isPlaying = true;
+  updatePlayerUI();
+  startAudioVisualizer();
+});
+
+nativeAudio.addEventListener('pause', () => {
+  setAudioConnectingState(false);
+  state.isPlaying = false;
+  updatePlayerUI();
+  stopAudioVisualizer();
+});
+
 nativeAudio.addEventListener('ended', () => {
+  setAudioConnectingState(false);
   state.isPlaying = false;
   updatePlayerUI();
   stopAudioVisualizer();
 });
 
 nativeAudio.addEventListener('error', (e) => {
+  setAudioConnectingState(false);
+  state.isPlaying = false;
+  updatePlayerUI();
+  stopAudioVisualizer();
   console.warn('Audio stream error event:', e);
 });
 
@@ -410,7 +484,8 @@ document.getElementById('player-volume-slider').addEventListener('input', (e) =>
 
 // Format seconds to mm:ss
 function formatSeconds(sec) {
-  if (isNaN(sec) || sec === null) return '00:00';
+  if (sec === Infinity || !isFinite(sec)) return 'LIVE';
+  if (isNaN(sec) || sec === null || sec < 0) return '00:00';
   const mins = Math.floor(sec / 60);
   const secs = Math.floor(sec % 60);
   const hrs = Math.floor(mins / 60);
