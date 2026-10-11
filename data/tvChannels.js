@@ -1,5 +1,5 @@
 // ==========================================================================
-// DAFTAR 19 SALURAN TV SUNNAH & DAKWAH ISLAM PILIHAN (LIVE STREAMING)
+// DAFTAR 20 SALURAN TV SUNNAH & DAKWAH ISLAM PILIHAN (LIVE STREAMING)
 // ==========================================================================
 // Semua saluran dilengkapi siaran langsung (live stream HLS m3u8 / Web Embed).
 // Tidak menggunakan pemutar YouTube statis / rekaman lama.
@@ -110,6 +110,22 @@ export const tvChannels = [
     color: '#4f46e5',
     description: 'Media audio visual dakwah Pondok Pesantren An-Najiyah Bandung, menyajikan kajian aqidah, manhaj salaf, dan adab penuntut ilmu.',
     programs: ['Kajian Aqidah Al-Wasithiyyah', 'Adab Penuntut Ilmu', 'Tahsin Al-Quran Bersanad', 'Daurah Ilmiyyah Pesantren']
+  },
+  {
+    id: 'mgi-tv',
+    name: 'MGI TV Tasikmalaya',
+    tagline: 'Medianya Umat Islam',
+    category: 'Pesantren Sunnah',
+    origin: 'Tasikmalaya, Jawa Barat',
+    satelit: 'Telkom 4 (Media Gema Islam)',
+    website: 'https://radioriyadhuljannah.com',
+    liveStream: null,
+    backupStream: 'https://tv.rodja.live/tasik/ngrp:mgitv_all/playlist.m3u8',
+    webEmbed: 'https://www.youtube.com/embed/d2BE6OCc1MI?autoplay=1&modestbranding=1&rel=0&playsinline=1',
+    logo: 'https://www.artvisi.id/logo/mgitv.png',
+    color: '#059669',
+    description: 'Saluran televisi dakwah Islam dari Pesantren Ihya As-Sunnah Tasikmalaya (Media Gema Islam / MGI TV), menyiarkan kajian ilmiah Al-Qur\'an dan Sunnah, kajian aqidah, fiqih ibadah, serial anak muslim, dan tabligh akbar.',
+    programs: ['Kajian Ustadz Abu Qotadah', 'Kajian Fiqih & Aqidah Ahlussunnah', 'Serial Anak Shalih & Murottal', 'Tabligh Akbar & Daurah Ilmiyyah']
   },
   {
     id: 'hijrah-tv',

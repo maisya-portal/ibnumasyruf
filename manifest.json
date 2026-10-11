@@ -1,7 +1,7 @@
 {
   "name": "Ibnu Masyurf App - Kajian Sunnah & Live Multimedia",
   "short_name": "Ibnu Masyurf",
-  "description": "Aplikasi Multimedia Kajian Sunnah, Live Radio Dakwah Ahlus Sunnah, 19 Saluran TV Sunnah, dan Ribuan Rekaman MP3 Kajian.net",
+  "description": "Aplikasi Multimedia Kajian Sunnah, Live Radio Dakwah Ahlus Sunnah, 20 Saluran TV Sunnah, dan Ribuan Rekaman MP3 Kajian.net",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -53,7 +53,7 @@
     {
       "name": "TV Sunnah",
       "short_name": "TV",
-      "description": "Tonton 19 Saluran TV Dakwah Sunnah",
+      "description": "Tonton 20 Saluran TV Dakwah Sunnah",
       "url": "./index.html#tv",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     },

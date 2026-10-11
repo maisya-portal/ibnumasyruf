@@ -1,6 +1,6 @@
 # Ibnu Masyurf App - Aplikasi Kajian Sunnah Multimedia (Audio & Video)
 
-Aplikasi web modern dan terpadu untuk menyimak **Kajian Sunnah, Siaran Radio Dakwah Ahlus Sunnah, dan 19 Saluran TV Sunnah Populer** di Indonesia, dilengkapi integrasi **LocalStorage** permanen untuk riwayat pemutaran (*play history*), bookmark favorit, catatan faidah ilmiah, dan sleep timer.
+Aplikasi web modern dan terpadu untuk menyimak **Kajian Sunnah, Siaran Radio Dakwah Ahlus Sunnah, dan 20 Saluran TV Sunnah Populer** di Indonesia, dilengkapi integrasi **LocalStorage** permanen untuk riwayat pemutaran (*play history*), bookmark favorit, catatan faidah ilmiah, dan sleep timer.
 
 ---
 
@@ -9,10 +9,11 @@ Aplikasi web modern dan terpadu untuk menyimak **Kajian Sunnah, Siaran Radio Dak
 1. **Daftar Radio Dakwah Islam Ahlus Sunnah**:
    - Rujukan: [Abu Ayaz's Blog - Daftar Radio Dakwah Islam Ahlus Sunnah di Indonesia](https://abuayaz.blogspot.com/2011/03/daftar-radio-dakwah-islam-ahlus-sunnah.html)
    - Dan streaming server resmi **Radio Islam Indonesia (RII)**.
-   - *Stasiun Unggulan*: Radio Rodja 756 AM, Radio Rodja Bandung 104.3 FM, Radio Rodja Majalengka, Radio Tarbiyah Sunnah 1476 AM Bandung, Radio Suara Al-Iman 846 AM Surabaya, Radio Muslim Sleman Yogyakarta, Radio Bass FM Salatiga, Radio Hidayah FM Pekanbaru, Radio Hang FM Batam, Radio Muadz Kendari, Radio An-Nashihah Makassar, Radio Qur'an 24 Jam, dll.
+   - *Stasiun Unggulan*: Radio Rodja 756 AM, Radio Riyadhul Jannah 104.5 FM Tasikmalaya, Radio Rodja Bandung 104.3 FM, Radio Rodja Majalengka, Radio Tarbiyah Sunnah 1476 AM Bandung, Radio Suara Al-Iman 846 AM Surabaya, Radio Muslim Sleman Yogyakarta, Radio Bass FM Salatiga, Radio Hidayah FM Pekanbaru, Radio Hang FM Batam, Radio Muadz Kendari, Radio An-Nashihah Makassar, Radio Qur'an 24 Jam, dll.
 
-2. **Daftar Saluran TV Sunnah Populer (19 Saluran Lengkap)**:
+2. **Daftar Saluran TV Sunnah Populer (20 Saluran Lengkap)**:
    - Rodja TV
+   - MGI TV (Media Gema Islam - Tasikmalaya)
    - Insan TV
    - Ashiil TV
    - Surau TV
@@ -91,8 +92,8 @@ Ibnu Masyurf App/
 ├── index.css             # Desain luxury Islamic dark mode, glassmorphism & visualizer
 ├── app.js                # Core controller, audio streaming, TV theater, LocalStorage engine
 ├── data/
-│   ├── radios.js         # Database 30+ stasiun radio dakwah sunnah & live stream URLs
-│   ├── tvChannels.js     # Database 19 saluran TV Sunnah populer beserta program & profil
+│   ├── radios.js         # Database stasiun radio dakwah sunnah & live stream URLs (termasuk Radio Riyadhul Jannah)
+│   ├── tvChannels.js     # Database 20 saluran TV Sunnah populer (termasuk MGI TV Tasikmalaya)
 │   ├── kajianAudio.js    # Database ceramah MP3 dari Kajian.net (streaming & download)
 │   ├── kajianVideo.js    # Database video kajian pilihan & edukasi anak Dei Kids TV
 │   └── dzikir.js         # Dzikir pagi petang shahih & atsar mutiara salaf

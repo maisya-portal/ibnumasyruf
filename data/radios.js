@@ -67,6 +67,22 @@ export const radioStations = [
     bitrate: "128 kbps"
   },
   {
+    id: "radio-riyadhul-jannah",
+    name: "Radio Riyadhul Jannah",
+    frequency: "FM 104.5 MHz",
+    city: "Tasikmalaya",
+    province: "Jawa Barat",
+    region: "Jawa",
+    slogan: "Menebar Sunnah Memetik Hidayah",
+    pembina: "Ustadz Abu Qotadah / Ma'had Ihya As-Sunnah Tasikmalaya",
+    streamUrl: "https://i.klikhost.com:8172/stream",
+    backupUrl: "https://i.klikhost.com/8172/stream",
+    logo: "https://radioriyadhuljannah.com/images/0/27291261/LOGO5-BRMEIWW4RYmRV6FVSgfGyw.png",
+    website: "https://radioriyadhuljannah.com",
+    genre: "Kajian Kitab, Fiqih, Aqidah & Murottal",
+    bitrate: "128 kbps"
+  },
+  {
     id: "suara-al-iman",
     name: "Radio Suara Al-Iman",
     frequency: "AM 846 KHz",

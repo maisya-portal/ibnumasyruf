@@ -520,7 +520,7 @@ function clearSleepTimer() {
 }
 
 // ==========================================================================
-// TV SUNNAH CONTROLLER (19 Saluran Live Streaming Mandiri - Bebas YouTube)
+// TV SUNNAH CONTROLLER (20 Saluran Live Streaming Mandiri - Bebas YouTube)
 // ==========================================================================
 
 let _hlsInstance = null;
@@ -771,7 +771,7 @@ function renderRadiosView() {
   container.innerHTML = list.map(r => createRadioCardHtml(r)).join('');
 }
 
-// 3. Render 19 TV Channels
+// 3. Render 20 TV Channels
 function renderTvChannelsView() {
   const container = document.getElementById('tv-channels-grid');
   let list = tvChannels;
