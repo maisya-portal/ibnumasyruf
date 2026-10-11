@@ -1,4 +1,4 @@
-# Ibnu Masyurf App - Aplikasi Kajian Sunnah Multimedia (Audio & Video)
+# Ibnu Masyruf App - Aplikasi Kajian Sunnah Multimedia (Audio & Video)
 
 Aplikasi web modern dan terpadu untuk menyimak **Kajian Sunnah, Siaran Radio Dakwah Ahlus Sunnah, dan 20 Saluran TV Sunnah Populer** di Indonesia, dilengkapi integrasi **LocalStorage** permanen untuk riwayat pemutaran (*play history*), bookmark favorit, catatan faidah ilmiah, dan sleep timer.
 
@@ -87,7 +87,7 @@ python -m http.server 3000
 ## 📁 Struktur Direktori Proyek
 
 ```
-Ibnu Masyurf App/
+Ibnu Masyruf App/
 ├── index.html            # Halaman utama aplikasi (Hero, TV Theater, Radio, Kajian, Dzikir)
 ├── index.css             # Desain luxury Islamic dark mode, glassmorphism & visualizer
 ├── app.js                # Core controller, audio streaming, TV theater, LocalStorage engine

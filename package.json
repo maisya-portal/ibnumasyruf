@@ -1,5 +1,5 @@
 {
-  "name": "ibnu-masyurf-app",
+  "name": "ibnu-masyruf-app",
   "version": "1.0.0",
   "description": "Aplikasi Kajian Sunnah Multimedia - Video & Audio Dakwah Ahlus Sunnah Wal Jama'ah",
   "main": "app.js",
@@ -16,6 +16,6 @@
     "salafy",
     "audio-dakwah"
   ],
-  "author": "Ibnu Masyurf App",
+  "author": "Ibnu Masyruf App",
   "license": "MIT"
 }

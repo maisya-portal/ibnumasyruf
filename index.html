@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ibnu Masyurf App - Kajian Sunnah Audio & Video Terpercaya</title>
+  <title>Ibnu Masyruf App - Kajian Sunnah Audio & Video Terpercaya</title>
   <meta name="description" content="Aplikasi Multimedia Kajian Sunnah, Live Radio Dakwah Sunnah (Radio Rodja, Radio Riyadhul Jannah, Bass FM), 20 Saluran TV Sunnah Populer, dan Ribuan Rekaman MP3 Kajian.net. Riwayat tersimpan di LocalStorage.">
   <meta name="keywords" content="kajian sunnah, radio rodja, tv sunnah, insan tv, ashiil tv, surau tv, kajian.net, abu ayaz, salaf, radio dakwah">
   
@@ -13,13 +13,16 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Ibnu Masyurf">
+  <meta name="apple-mobile-web-app-title" content="Ibnu Masyruf">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-  <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕌</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   
   <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +33,58 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body class="theme-dark">
+
+  <!-- ========================================================
+       LUXURY APP LOADING / SPLASH SCREEN (ANIMATED)
+  ======================================================== -->
+  <div id="app-splash-screen" class="app-splash-screen" role="progressbar" aria-label="Memuat Ibnu Masyruf App">
+    <div class="splash-backdrop">
+      <div class="splash-radial-glow"></div>
+      <div class="splash-stars-overlay"></div>
+    </div>
+    
+    <div class="splash-content">
+      <div class="splash-logo-container">
+        <!-- Rotating Golden Ring -->
+        <div class="splash-ornate-ring"></div>
+        <!-- Pulsing Aura Behind Icon -->
+        <div class="splash-aura-glow"></div>
+        <!-- Animated 3D App Icon with Shimmer Sweep -->
+        <div class="splash-icon-wrapper">
+          <img src="icons/icon-512.png" alt="Ibnu Masyruf App Icon" class="splash-icon-img" width="136" height="136">
+          <div class="splash-shimmer-sweep"></div>
+        </div>
+      </div>
+
+      <!-- Animated Soundwave / Radio Frequencies Motif -->
+      <div class="splash-soundwave">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-4"></span>
+        <span class="bar bar-5"></span>
+        <span class="bar bar-6"></span>
+        <span class="bar bar-5"></span>
+        <span class="bar bar-4"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-1"></span>
+      </div>
+
+      <div class="splash-title-wrap">
+        <h1 class="splash-app-title">Ibnu Masyruf App</h1>
+        <p class="splash-app-tagline">Media Dakwah & Belajar • Kajian Sunnah</p>
+      </div>
+
+      <!-- Luxury Progress Bar -->
+      <div class="splash-progress-wrapper">
+        <div class="splash-progress-track">
+          <div id="splash-progress-bar" class="splash-progress-bar"></div>
+        </div>
+        <div id="splash-status-text" class="splash-status-text">Menyiapkan siaran & multimedia...</div>
+      </div>
+    </div>
+  </div>
 
   <!-- APP WRAPPER -->
   <div id="app" class="app-container">
@@ -47,10 +102,10 @@
         <!-- Brand Logo & Title -->
         <div class="brand-group" id="btn-brand-home">
           <div class="brand-logo-icon">
-            <span class="icon-mosque">🕌</span>
+            <img src="icons/icon-192.png" alt="Logo Ibnu Masyruf App" class="brand-img-logo" width="44" height="44">
           </div>
           <div class="brand-text">
-            <span class="brand-name">Ibnu Masyurf App</span>
+            <span class="brand-name">Ibnu Masyruf App</span>
             <span class="brand-tagline">Kajian Sunnah & Multimedia Salafiyyah</span>
           </div>
         </div>
@@ -64,7 +119,7 @@
 
         <!-- Header Actions: Install PWA, Quick Resume, Favorite, History, Theme -->
         <div class="header-actions">
-          <button id="btn-install-pwa" class="btn-action-badge btn-install-app hidden" title="Install Ibnu Masyurf App ke perangkat">
+          <button id="btn-install-pwa" class="btn-action-badge btn-install-app hidden" title="Install Ibnu Masyruf App ke perangkat">
             <span class="action-icon">📲</span>
             <span class="action-text">Install App</span>
           </button>

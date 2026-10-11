@@ -1,9 +1,9 @@
 // ==========================================================================
-// IBNU MASYURF APP - SERVICE WORKER (PWA)
-// Cache Version: v1.3.0
+// IBNU MASYRUF APP - SERVICE WORKER (PWA)
+// Cache Version: v1.4.0
 // ==========================================================================
 
-const CACHE_NAME = 'ibnumasyurf-cache-v1.3.0';
+const CACHE_NAME = 'ibnumasyruf-cache-v1.4.0';
 
 // Core Application Shell Assets
 const STATIC_ASSETS = [
@@ -12,10 +12,15 @@ const STATIC_ASSETS = [
   './index.css',
   './app.js',
   './manifest.json',
+  './favicon.ico',
+  './icons/favicon.png',
+  './icons/favicon-32.png',
+  './icons/favicon-16.png',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
+  './icons/app-logo.png',
   './data/radios.js',
   './data/tvChannels.js',
   './data/kajianAudio.js',
@@ -48,7 +53,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
-          if (name !== CACHE_NAME && name.startsWith('ibnumasyurf-')) {
+          if (name !== CACHE_NAME && (name.startsWith('ibnumasyruf-') || name.startsWith('ibnumasyurf-'))) {
             console.log('[SW] Menghapus cache lama:', name);
             return caches.delete(name);
           }

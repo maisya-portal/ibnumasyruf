@@ -1,5 +1,5 @@
 // ==========================================================================
-// IBNU MASYURF APP - CORE APPLICATION ENGINE
+// IBNU MASYRUF APP - CORE APPLICATION ENGINE
 // ==========================================================================
 
 import { radioStations } from './data/radios.js';
@@ -1414,11 +1414,41 @@ function switchTab(tabId) {
 }
 
 // ==========================================================================
+// SPLASH / LOADING SCREEN CONTROLLER
+// ==========================================================================
+
+function updateSplashProgress(percent, statusText) {
+  const bar = document.getElementById('splash-progress-bar');
+  const text = document.getElementById('splash-status-text');
+  if (bar) bar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
+  if (text && statusText) text.textContent = statusText;
+}
+
+let _splashDismissed = false;
+function dismissSplashScreen() {
+  if (_splashDismissed) return;
+  _splashDismissed = true;
+  
+  const splash = document.getElementById('app-splash-screen');
+  if (!splash) return;
+
+  updateSplashProgress(100, 'Aplikasi Siap Digunakan');
+
+  setTimeout(() => {
+    splash.classList.add('splash-fading');
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 750);
+  }, 450);
+}
+
+// ==========================================================================
 // INITIALIZATION & EVENT LISTENERS
 // ==========================================================================
 
 function initApp() {
-  console.log('Initializing Ibnu Masyurf App...');
+  console.log('Initializing Ibnu Masyruf App...');
+  updateSplashProgress(25, 'Memuat stasiun radio & TV sunnah...');
 
   // 1. Populate Asatidzah & Category options in Audio Filter
   const speakerSelect = document.getElementById('select-speaker');
@@ -1439,6 +1469,8 @@ function initApp() {
     categorySelect.appendChild(opt);
   });
 
+  updateSplashProgress(65, 'Menyiapkan arsip audio & video...');
+
   // 2. Initial Render of all views
   renderHomeView();
   renderRadiosView();
@@ -1451,6 +1483,8 @@ function initApp() {
   renderDzikirView();
   updateHistoryBadges();
   updateFavoritesBadges();
+
+  updateSplashProgress(85, 'Menghubungkan pustaka & faidah...');
 
   // Initialize TV player default (tanpa autoplay, tanpa simpan riwayat & tanpa toast saat inisialisasi awal)
   switchTvChannel('rodja-tv', false, false);
@@ -1764,7 +1798,12 @@ function initApp() {
   initPWAInstall();
   initNetworkStatusMonitor();
 
-  console.log('Ibnu Masyurf App is ready!');
+  // Loading screen selesai & transisi mulus
+  updateSplashProgress(100, 'Selamat Datang di Ibnu Masyruf App');
+  dismissSplashScreen();
+  setTimeout(dismissSplashScreen, 2800); // Batas aman maksimal
+
+  console.log('Ibnu Masyruf App is ready!');
 }
 
 // ==========================================================================
@@ -1784,7 +1823,7 @@ function registerServiceWorker() {
             if (installingWorker) {
               installingWorker.addEventListener('statechange', () => {
                 if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  showToast('Pembaruan Ibnu Masyurf App tersedia!');
+                  showToast('Pembaruan Ibnu Masyruf App tersedia!');
                 }
               });
             }
@@ -1817,7 +1856,7 @@ function initPWAInstall() {
       const { outcome } = await deferredInstallPrompt.userChoice;
       console.log(`[PWA] Install prompt outcome: ${outcome}`);
       if (outcome === 'accepted') {
-        showToast('Terima kasih! Ibnu Masyurf App sedang diinstal...');
+        showToast('Terima kasih! Ibnu Masyruf App sedang diinstal...');
       }
       deferredInstallPrompt = null;
       btnInstall.classList.add('hidden');
@@ -1825,7 +1864,7 @@ function initPWAInstall() {
   }
 
   window.addEventListener('appinstalled', () => {
-    console.log('[PWA] Ibnu Masyurf App sukses diinstal');
+    console.log('[PWA] Ibnu Masyruf App sukses diinstal');
     if (btnInstall) btnInstall.classList.add('hidden');
     showToast('Alhamdulillah! Aplikasi berhasil diinstal ke perangkat Anda.');
   });
